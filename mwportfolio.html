@@ -10793,8 +10793,7 @@ var author$project$CyclophoneOverview$front = function (model) {
 		mdgriffith$elm_ui$Element$column,
 		_List_fromArray(
 			[
-				mdgriffith$elm_ui$Element$height(mdgriffith$elm_ui$Element$fill),
-				mdgriffith$elm_ui$Element$spacing(5)
+				mdgriffith$elm_ui$Element$height(mdgriffith$elm_ui$Element$fill)
 			]),
 		_List_fromArray(
 			[
@@ -10803,60 +10802,50 @@ var author$project$CyclophoneOverview$front = function (model) {
 				author$project$Common$headingStyle,
 				mdgriffith$elm_ui$Element$text('The Cyclophone')),
 				A2(
-				mdgriffith$elm_ui$Element$el,
+				mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
 					[
-						mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$shrink)
+						mdgriffith$elm_ui$Element$spacing(10)
 					]),
-				A2(
-					mdgriffith$elm_ui$Element$paragraph,
-					_List_fromArray(
-						[
-							mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$shrink)
-						]),
-					_List_fromArray(
-						[
-							mdgriffith$elm_ui$Element$text('In 2013 Chris Chronopoulous and I '),
-							A2(
-							mdgriffith$elm_ui$Element$newTabLink,
-							author$project$Common$linkStyle,
-							{
-								label: mdgriffith$elm_ui$Element$text('developed the original cyclophone in a few weeks'),
-								url: 'http://boulderhackerspace.com/2013/06/14/member-project-of-the-week-the-cyclophone/'
-							}),
-							mdgriffith$elm_ui$Element$text('.  It had a pretty simple control system for the keys - just on/off switches.')
-						]))),
-				A2(
-				mdgriffith$elm_ui$Element$el,
-				_List_Nil,
-				A2(
-					mdgriffith$elm_ui$Element$paragraph,
-					_List_Nil,
-					_List_fromArray(
-						[
-							mdgriffith$elm_ui$Element$text('The initial version of the instrument had some problems with durability, and while we were rebuilding it we decided to enhance the key sensors too.  This turned into a bigger project that I had ever planned on!')
-						]))),
-				A2(
-				mdgriffith$elm_ui$Element$el,
-				_List_Nil,
-				A2(
-					mdgriffith$elm_ui$Element$paragraph,
-					_List_Nil,
-					_List_fromArray(
-						[
-							mdgriffith$elm_ui$Element$text('The code for everything, including circuit boards, is online - check out the '),
-							A2(
-							mdgriffith$elm_ui$Element$newTabLink,
-							_Utils_ap(
+				_List_fromArray(
+					[
+						A2(
+						mdgriffith$elm_ui$Element$paragraph,
+						_List_fromArray(
+							[
+								mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$shrink)
+							]),
+						_List_fromArray(
+							[
+								mdgriffith$elm_ui$Element$text('The cyclophone is a circular coffee table shaped instrument with 24 keys.  Its designed for collaborative use - one person can\'t reach all the keys at once.  In 2013 Chris Chronopoulous and I '),
+								A2(
+								mdgriffith$elm_ui$Element$newTabLink,
 								author$project$Common$linkStyle,
-								_List_fromArray(
-									[mdgriffith$elm_ui$Element$centerX])),
-							{
-								label: mdgriffith$elm_ui$Element$text('cyclophone repo on github'),
-								url: 'https://github.com/chronopoulos/cyclophone'
-							}),
-							mdgriffith$elm_ui$Element$text('.')
-						])))
+								{
+									label: mdgriffith$elm_ui$Element$text('developed the original cyclophone in a few weeks'),
+									url: 'http://boulderhackerspace.com/2013/06/14/member-project-of-the-week-the-cyclophone/'
+								}),
+								mdgriffith$elm_ui$Element$text(' for the Apogaea festival.  It had a pretty simple control system for the keys - just on/off switches.')
+							])),
+						A2(
+						mdgriffith$elm_ui$Element$paragraph,
+						_List_Nil,
+						_List_fromArray(
+							[
+								mdgriffith$elm_ui$Element$text('The initial version of the instrument had some problems with durability, and while we were rebuilding it we decided to enhance the key sensors too.  This turned into a bigger project that I had ever planned on!  The source for everything, including circuit boards, is online - check out the '),
+								A2(
+								mdgriffith$elm_ui$Element$newTabLink,
+								_Utils_ap(
+									author$project$Common$linkStyle,
+									_List_fromArray(
+										[mdgriffith$elm_ui$Element$centerX])),
+								{
+									label: mdgriffith$elm_ui$Element$text('cyclophone repo on github'),
+									url: 'https://github.com/chronopoulos/cyclophone'
+								}),
+								mdgriffith$elm_ui$Element$text('.')
+							]))
+					]))
 			]));
 };
 var author$project$TangoColors$darkBlue = A3(mdgriffith$elm_ui$Element$rgb255, 32, 74, 135);
@@ -11355,14 +11344,15 @@ var author$project$CyclophoneStory$showImage = F2(
 						mdgriffith$elm_ui$Element$image,
 						_List_fromArray(
 							[
-								mdgriffith$elm_ui$Element$width(
+								mdgriffith$elm_ui$Element$height(
 								mdgriffith$elm_ui$Element$px(
-									elm$core$Basics$round(vp.viewport.width * 0.5)))
+									elm$core$Basics$round(vp.viewport.height * 0.7)))
 							]),
 						{
 							description: ie.imgdesc,
 							src: author$project$CyclophoneStory$imageAddr(ie.imgname)
-						}))
+						})),
+					mdgriffith$elm_ui$Element$text('')
 				]));
 	});
 var elm$core$Bitwise$shiftRightZfBy = _Bitwise_shiftRightZfBy;
@@ -11558,7 +11548,8 @@ var author$project$CyclophoneOverview$view = F2(
 			mdgriffith$elm_ui$Element$column,
 			_List_fromArray(
 				[
-					mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$fill)
+					mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$fill),
+					mdgriffith$elm_ui$Element$spacing(10)
 				]),
 			_List_fromArray(
 				[
@@ -11572,6 +11563,7 @@ var author$project$CyclophoneOverview$view = F2(
 var author$project$Main$CyMsg = function (a) {
 	return {$: 'CyMsg', a: a};
 };
+var author$project$TangoColors$darkGrey = A3(mdgriffith$elm_ui$Element$rgb255, 186, 189, 182);
 var author$project$Main$otherProjects = A2(
 	mdgriffith$elm_ui$Element$column,
 	_List_fromArray(
@@ -11668,7 +11660,15 @@ var author$project$Main$otherProjects = A2(
 					}),
 					mdgriffith$elm_ui$Element$text(', which is designed to help people practice things - like a musical instrument, or learing vim commands, or really whatever.  Still pre-alpha though!  '),
 					mdgriffith$elm_ui$Element$text('The past five or six years I\'ve really been focusing a lot on bluegrass guitar too.  Its a pretty high mountain to climb, that bluegrass guitar, but there\'s a really vibrant bluegrass scene in this area and its really a lot of fun.')
-				]))
+				])),
+			mdgriffith$elm_ui$Element$text(''),
+			A2(
+			mdgriffith$elm_ui$Element$el,
+			_List_fromArray(
+				[
+					mdgriffith$elm_ui$Element$Font$color(author$project$TangoColors$darkGrey)
+				]),
+			mdgriffith$elm_ui$Element$text('© 2018 Ben Burdette'))
 		]));
 var author$project$Main$eview = function (model) {
 	return A2(
