@@ -11011,12 +11011,12 @@ var author$project$CyclophoneStory$imageEntries = _List_fromArray(
 		{
 		imgdesc: 'adc printed circuit boards',
 		imgname: 'IMG_20140510_222104.jpg',
-		notes: author$project$CyclophoneStory$NString('Fresh boards fresh osh park!  Making the boards in Kicad turned out to be pretty fun! ' + ('This is the batch of \'central\' analog-to-digital boards to attach to the raspberry pi. ' + ('There were also a bunch of individual key sensor boards - I made ' + '32 of those, and the instrument uses 24.')))
+		notes: author$project$CyclophoneStory$NString('Fresh boards from osh park!  Making the boards in Kicad turned out to be pretty fun! ' + ('This is the batch of \'central\' analog-to-digital boards to attach to the raspberry pi. ' + ('There were also a bunch of individual key sensor boards - I made ' + '32 of those, and the instrument uses 24.')))
 	},
 		{
 		imgdesc: 'sensor printed circuit boards',
 		imgname: 'IMG_20140510_184954.jpg',
-		notes: author$project$CyclophoneStory$NString('Each key has its own sensor board. Here they are with components attached')
+		notes: author$project$CyclophoneStory$NString('Each key has its own sensor board. Here they are with components attached.')
 	},
 		{
 		imgdesc: 'printed circuit board',
@@ -11446,6 +11446,10 @@ var mdgriffith$elm_ui$Element$transparent = function (on) {
 };
 var author$project$CyclophoneStory$view = F2(
 	function (vp, model) {
+		var prev = model.page > 0;
+		var next = _Utils_cmp(
+			model.page,
+			elm$core$Array$length(author$project$CyclophoneStory$imageEntryArray) - 1) < 0;
 		return A2(
 			mdgriffith$elm_ui$Element$column,
 			_List_fromArray(
@@ -11481,14 +11485,14 @@ var author$project$CyclophoneStory$view = F2(
 								author$project$Common$buttonStyle,
 								_List_fromArray(
 									[
-										mdgriffith$elm_ui$Element$transparent(!(model.page > 0))
+										mdgriffith$elm_ui$Element$transparent(!prev)
 									])),
 							{
 								label: mdgriffith$elm_ui$Element$text('prev'),
-								onPress: elm$core$Maybe$Just(author$project$CyclophoneStory$Prev)
+								onPress: prev ? elm$core$Maybe$Just(author$project$CyclophoneStory$Prev) : elm$core$Maybe$Nothing
 							}),
 							mdgriffith$elm_ui$Element$text(
-							elm$core$String$fromInt(model.page) + (' of ' + elm$core$String$fromInt(
+							elm$core$String$fromInt(model.page + 1) + (' of ' + elm$core$String$fromInt(
 								elm$core$Array$length(author$project$CyclophoneStory$imageEntryArray)))),
 							A2(
 							mdgriffith$elm_ui$Element$Input$button,
@@ -11496,14 +11500,11 @@ var author$project$CyclophoneStory$view = F2(
 								author$project$Common$buttonStyle,
 								_List_fromArray(
 									[
-										mdgriffith$elm_ui$Element$transparent(
-										!(_Utils_cmp(
-											model.page,
-											elm$core$Array$length(author$project$CyclophoneStory$imageEntryArray) - 1) < 0))
+										mdgriffith$elm_ui$Element$transparent(!next)
 									])),
 							{
 								label: mdgriffith$elm_ui$Element$text('next'),
-								onPress: elm$core$Maybe$Just(author$project$CyclophoneStory$Next)
+								onPress: next ? elm$core$Maybe$Just(author$project$CyclophoneStory$Next) : elm$core$Maybe$Nothing
 							})
 						])),
 					A2(author$project$CyclophoneStory$showPage, vp, model.page)
