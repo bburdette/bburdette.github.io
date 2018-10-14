@@ -10926,10 +10926,6 @@ var author$project$Common$buttonStyle = _List_fromArray(
 	]);
 var author$project$CyclophoneStory$Next = {$: 'Next'};
 var author$project$CyclophoneStory$Prev = {$: 'Prev'};
-var author$project$CyclophoneStory$NButton = F2(
-	function (a, b) {
-		return {$: 'NButton', a: a, b: b};
-	});
 var author$project$CyclophoneStory$NLink = F2(
 	function (a, b) {
 		return {$: 'NLink', a: a, b: b};
@@ -10940,7 +10936,6 @@ var author$project$CyclophoneStory$NList = function (a) {
 var author$project$CyclophoneStory$NString = function (a) {
 	return {$: 'NString', a: a};
 };
-var author$project$CyclophoneStory$OtherProjs = {$: 'OtherProjs'};
 var author$project$CyclophoneStory$imageEntries = _List_fromArray(
 	[
 		{
@@ -10959,7 +10954,7 @@ var author$project$CyclophoneStory$imageEntries = _List_fromArray(
 		caption: 'the new more durable top - polyethylene!',
 		imgdesc: 'polyetheylene disc',
 		imgname: 'IMG_20130626_184627.jpg',
-		notes: author$project$CyclophoneStory$NString('we tested a number of different plastics and settled on high density polyethylene as being durable and with the right about of flex.')
+		notes: author$project$CyclophoneStory$NString('we tested a number of different plastics and settled on high density polyethylene as being durable and with the right amount of flex.')
 	},
 		{
 		caption: 'cutting the top for the keys',
@@ -11071,13 +11066,7 @@ var author$project$CyclophoneStory$imageEntries = _List_fromArray(
 		caption: 'cyclophone complete with final sensor hardware',
 		imgdesc: 'picture of circuit boards',
 		imgname: 'IMG_20140602_115652.jpg',
-		notes: author$project$CyclophoneStory$NList(
-			_List_fromArray(
-				[
-					author$project$CyclophoneStory$NString('Ready to head to Apogaea 2014!  This wasn\'t the end of the project - later tweaks included LEDs, onboard wifi, a web server and haskell/supercollider audio system, and various other details too numerous to mention!  Currently development has taken a back seat to '),
-					A2(author$project$CyclophoneStory$NButton, author$project$CyclophoneStory$OtherProjs, 'other projects'),
-					author$project$CyclophoneStory$NString('.')
-				]))
+		notes: author$project$CyclophoneStory$NString('Ready to head to Apogaea 2014!  This wasn\'t the end of the project - later tweaks included LEDs, onboard wifi, a web server and haskell/supercollider audio system, and various other details too numerous to mention!  Currently development has taken a back seat to other projects.')
 	}
 	]);
 var elm$core$Array$fromListHelp = F3(
@@ -11454,8 +11443,6 @@ var elm$core$Array$length = function (_n0) {
 	var len = _n0.a;
 	return len;
 };
-var mdgriffith$elm_ui$Internal$Model$Empty = {$: 'Empty'};
-var mdgriffith$elm_ui$Element$none = mdgriffith$elm_ui$Internal$Model$Empty;
 var mdgriffith$elm_ui$Internal$Model$AsRow = {$: 'AsRow'};
 var mdgriffith$elm_ui$Internal$Model$asRow = mdgriffith$elm_ui$Internal$Model$AsRow;
 var mdgriffith$elm_ui$Element$row = F2(
@@ -11476,6 +11463,20 @@ var mdgriffith$elm_ui$Element$row = F2(
 						attrs))),
 			mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
 	});
+var mdgriffith$elm_ui$Internal$Flag$transparency = mdgriffith$elm_ui$Internal$Flag$flag(0);
+var mdgriffith$elm_ui$Internal$Model$Transparency = F2(
+	function (a, b) {
+		return {$: 'Transparency', a: a, b: b};
+	});
+var mdgriffith$elm_ui$Element$transparent = function (on) {
+	return on ? A2(
+		mdgriffith$elm_ui$Internal$Model$StyleClass,
+		mdgriffith$elm_ui$Internal$Flag$transparency,
+		A2(mdgriffith$elm_ui$Internal$Model$Transparency, 'transparent', 1.0)) : A2(
+		mdgriffith$elm_ui$Internal$Model$StyleClass,
+		mdgriffith$elm_ui$Internal$Flag$transparency,
+		A2(mdgriffith$elm_ui$Internal$Model$Transparency, 'visible', 0.0));
+};
 var author$project$CyclophoneStory$view = F2(
 	function (vp, model) {
 		return A2(
@@ -11507,27 +11508,42 @@ var author$project$CyclophoneStory$view = F2(
 						]),
 					_List_fromArray(
 						[
-							(model.page > 0) ? A2(
+							A2(
 							mdgriffith$elm_ui$Element$Input$button,
-							author$project$Common$buttonStyle,
+							_Utils_ap(
+								author$project$Common$buttonStyle,
+								_List_fromArray(
+									[
+										mdgriffith$elm_ui$Element$transparent(!(model.page > 0))
+									])),
 							{
 								label: mdgriffith$elm_ui$Element$text('prev'),
 								onPress: elm$core$Maybe$Just(author$project$CyclophoneStory$Prev)
-							}) : mdgriffith$elm_ui$Element$none,
-							(_Utils_cmp(
-							model.page,
-							elm$core$Array$length(author$project$CyclophoneStory$imageEntryArray) - 1) < 0) ? A2(
+							}),
+							mdgriffith$elm_ui$Element$text(
+							elm$core$String$fromInt(model.page) + (' of ' + elm$core$String$fromInt(
+								elm$core$Array$length(author$project$CyclophoneStory$imageEntryArray)))),
+							A2(
 							mdgriffith$elm_ui$Element$Input$button,
-							author$project$Common$buttonStyle,
+							_Utils_ap(
+								author$project$Common$buttonStyle,
+								_List_fromArray(
+									[
+										mdgriffith$elm_ui$Element$transparent(
+										!(_Utils_cmp(
+											model.page,
+											elm$core$Array$length(author$project$CyclophoneStory$imageEntryArray) - 1) < 0))
+									])),
 							{
 								label: mdgriffith$elm_ui$Element$text('next'),
 								onPress: elm$core$Maybe$Just(author$project$CyclophoneStory$Next)
-							}) : mdgriffith$elm_ui$Element$none
+							})
 						])),
 					A2(author$project$CyclophoneStory$showPage, vp, model.page)
 				]));
 	});
 var elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
+var mdgriffith$elm_ui$Internal$Model$Empty = {$: 'Empty'};
 var mdgriffith$elm_ui$Internal$Model$map = F2(
 	function (fn, el) {
 		switch (el.$) {
