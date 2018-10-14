@@ -11026,7 +11026,13 @@ var author$project$CyclophoneStory$imageEntries = _List_fromArray(
 		{
 		imgdesc: 'everything wired up!',
 		imgname: 'IMG_20140511_181439.jpg',
-		notes: author$project$CyclophoneStory$NString('Testing the complete set of boards.  The sensors connect to the central boards with RJ11 telephone ' + 'cable.  Shielded, cheap, and pluggable!  Electrical interference problems solved.')
+		notes: author$project$CyclophoneStory$NList(
+			_List_fromArray(
+				[
+					author$project$CyclophoneStory$NString('Testing the complete set of boards.  The sensors connect to the central boards with RJ11 telephone ' + 'cable.  Shielded, cheap, and pluggable!  Electrical interference problems solved.  Here\'s a '),
+					A2(author$project$CyclophoneStory$NLink, 'https://www.youtube.com/watch?v=jYJeHk4XHPw', 'video of the test rig in action'),
+					author$project$CyclophoneStory$NString('.')
+				]))
 	},
 		{
 		imgdesc: 'sweet subwoofer',
