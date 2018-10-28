@@ -7407,7 +7407,7 @@ var author$project$Neck$calcKeyDims = function (model) {
 	var starty = model.y - (width * 0.5);
 	return {endx: 1.0, endy: starty + width, startx: -1.0, starty: starty, width: width};
 };
-var author$project$Neck$fretSpacing = author$project$Neck$stringSpacing * 2.0;
+var author$project$Neck$fretSpacing = author$project$Neck$stringSpacing * 1.6;
 var elm$core$Basics$round = _Basics_round;
 var author$project$Neck$onClick = F2(
 	function (model, gll) {
@@ -7980,6 +7980,32 @@ var author$project$Common$circle = F4(
 						A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0, 0),
 						A2(author$project$Common$circlepoints, r, 15)))));
 	});
+var author$project$Neck$drawFretDots = function (model) {
+	var kd = author$project$Neck$calcKeyDims(model);
+	var fretDot = F2(
+		function (x, y) {
+			return A4(
+				author$project$Common$circle,
+				x,
+				y,
+				3.0e-2,
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0));
+		});
+	var dotlocs = _List_fromArray(
+		[2.5, 4.5, 6.5, 8.5]);
+	return _Utils_ap(
+		A2(
+			elm$core$List$map,
+			function (dl) {
+				return A2(fretDot, kd.startx + (dl * author$project$Neck$fretSpacing), kd.starty + (kd.width * 0.5));
+			},
+			dotlocs),
+		_List_fromArray(
+			[
+				A2(fretDot, kd.startx + (11.5 * author$project$Neck$fretSpacing), kd.starty + (kd.width * 0.22)),
+				A2(fretDot, kd.startx + (11.5 * author$project$Neck$fretSpacing), kd.starty + (kd.width * 0.78))
+			]));
+};
 var author$project$Neck$drawPress = function (model) {
 	var kd = author$project$Neck$calcKeyDims(model);
 	var _n0 = model.press;
@@ -8082,7 +8108,9 @@ var author$project$Neck$view = function (model) {
 					return A3(author$project$Neck$fret, (i * author$project$Neck$fretSpacing) - 1.0, kd.starty, kd.width);
 				},
 				A2(elm$core$List$range, 0, model.neck.fretCount)),
-			author$project$Neck$drawPress(model)));
+			_Utils_ap(
+				author$project$Neck$drawPress(model),
+				author$project$Neck$drawFretDots(model))));
 };
 var author$project$Common$noteXSpacing = 0.1;
 var elm$core$List$tail = function (list) {
