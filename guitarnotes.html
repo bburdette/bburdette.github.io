@@ -7972,16 +7972,12 @@ var author$project$Common$circle = F4(
 						A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0, 0),
 						A2(author$project$Common$circlepoints, r, 15)))));
 	});
+var author$project$Neck$neckColor = A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0, 0);
 var author$project$Neck$drawFretDots = function (model) {
 	var kd = author$project$Neck$calcKeyDims(model);
 	var fretDot = F2(
 		function (x, y) {
-			return A4(
-				author$project$Common$circle,
-				x,
-				y,
-				3.0e-2,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0));
+			return A4(author$project$Common$circle, x, y, 3.0e-2, author$project$Neck$neckColor);
 		});
 	var dotlocs = _List_fromArray(
 		[2.5, 4.5, 6.5, 8.5]);
@@ -8020,6 +8016,7 @@ var author$project$Neck$drawPress = function (model) {
 };
 var author$project$Common$lineth = 1.0e-2;
 var author$project$Common$linethd2 = author$project$Common$lineth * 0.5;
+var author$project$Neck$neckZ = 0.5;
 var elm_explorations$webgl$WebGL$MeshIndexed3 = F3(
 	function (a, b, c) {
 		return {$: 3, a: a, b: b, c: c};
@@ -8034,20 +8031,20 @@ var author$project$Neck$fret = F3(
 				[
 					A2(
 					author$project$Common$Vertex,
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x - author$project$Common$linethd2, y, 0),
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x - author$project$Common$linethd2, y, author$project$Neck$neckZ),
+					author$project$Neck$neckColor),
 					A2(
 					author$project$Common$Vertex,
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x + author$project$Common$linethd2, y, 0),
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x + author$project$Common$linethd2, y, author$project$Neck$neckZ),
+					author$project$Neck$neckColor),
 					A2(
 					author$project$Common$Vertex,
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x + author$project$Common$linethd2, y + len, 0),
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x + author$project$Common$linethd2, y + len, author$project$Neck$neckZ),
+					author$project$Neck$neckColor),
 					A2(
 					author$project$Common$Vertex,
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x - author$project$Common$linethd2, y + len, 0),
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0))
+					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x - author$project$Common$linethd2, y + len, author$project$Neck$neckZ),
+					author$project$Neck$neckColor)
 				]),
 			_List_fromArray(
 				[
@@ -8062,20 +8059,20 @@ var author$project$Neck$string = function (y) {
 			[
 				A2(
 				author$project$Common$Vertex,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, -1, y - author$project$Common$linethd2, 0),
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, -1, y - author$project$Common$linethd2, author$project$Neck$neckZ),
+				author$project$Neck$neckColor),
 				A2(
 				author$project$Common$Vertex,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, -1, y + author$project$Common$linethd2, 0),
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, -1, y + author$project$Common$linethd2, author$project$Neck$neckZ),
+				author$project$Neck$neckColor),
 				A2(
 				author$project$Common$Vertex,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, y + author$project$Common$linethd2, 0),
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, y + author$project$Common$linethd2, author$project$Neck$neckZ),
+				author$project$Neck$neckColor),
 				A2(
 				author$project$Common$Vertex,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, y - author$project$Common$linethd2, 0),
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0))
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, y - author$project$Common$linethd2, author$project$Neck$neckZ),
+				author$project$Neck$neckColor)
 			]),
 		_List_fromArray(
 			[
@@ -8156,6 +8153,8 @@ var author$project$Staff$dropEvry = F2(
 	});
 var author$project$Common$noteradius = 2.0e-2;
 var author$project$Common$ledgerRadius = author$project$Common$noteradius * 2.0;
+var author$project$Staff$staffLineColor = A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0, 0);
+var author$project$Staff$staffLineZ = 0.5;
 var author$project$Staff$ledgerLine = F2(
 	function (x, y) {
 		return A2(
@@ -8164,20 +8163,20 @@ var author$project$Staff$ledgerLine = F2(
 				[
 					A2(
 					author$project$Common$Vertex,
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x - author$project$Common$ledgerRadius, y - author$project$Common$linethd2, 0),
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x - author$project$Common$ledgerRadius, y - author$project$Common$linethd2, author$project$Staff$staffLineZ),
+					author$project$Staff$staffLineColor),
 					A2(
 					author$project$Common$Vertex,
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x - author$project$Common$ledgerRadius, y + author$project$Common$linethd2, 0),
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x - author$project$Common$ledgerRadius, y + author$project$Common$linethd2, author$project$Staff$staffLineZ),
+					author$project$Staff$staffLineColor),
 					A2(
 					author$project$Common$Vertex,
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x + author$project$Common$ledgerRadius, y + author$project$Common$linethd2, 0),
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x + author$project$Common$ledgerRadius, y + author$project$Common$linethd2, author$project$Staff$staffLineZ),
+					author$project$Staff$staffLineColor),
 					A2(
 					author$project$Common$Vertex,
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x + author$project$Common$ledgerRadius, y - author$project$Common$linethd2, 0),
-					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0))
+					A3(elm_explorations$linear_algebra$Math$Vector3$vec3, x + author$project$Common$ledgerRadius, y - author$project$Common$linethd2, author$project$Staff$staffLineZ),
+					author$project$Staff$staffLineColor)
 				]),
 			_List_fromArray(
 				[
@@ -8296,7 +8295,7 @@ var author$project$Staff$midiToStaffNote = F2(
 			author$project$Staff$pcNoteToStaffNote,
 			A2(author$project$Staff$midiToPcNote, staff.bg, midinote));
 	});
-var author$project$MusicSymbols$color = A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0.5, 0.5, 0.25);
+var author$project$MusicSymbols$color = A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0, 0);
 var author$project$MusicSymbols$flatVecs = _List_fromArray(
 	[
 		_Utils_Tuple3(
@@ -15764,7 +15763,7 @@ var author$project$MusicSymbols$trebleClef = F3(
 			elm_explorations$linear_algebra$Math$Matrix4$translate3,
 			sx - 1.0,
 			sy + 0.7,
-			0,
+			0.0,
 			A2(
 				elm_explorations$linear_algebra$Math$Matrix4$scale,
 				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, s, s, s),
@@ -15882,20 +15881,20 @@ var author$project$Staff$staffline = function (y) {
 			[
 				A2(
 				author$project$Common$Vertex,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, -1, y - author$project$Common$linethd2, 0),
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, -1, y - author$project$Common$linethd2, author$project$Staff$staffLineZ),
+				author$project$Staff$staffLineColor),
 				A2(
 				author$project$Common$Vertex,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, -1, y + author$project$Common$linethd2, 0),
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, -1, y + author$project$Common$linethd2, author$project$Staff$staffLineZ),
+				author$project$Staff$staffLineColor),
 				A2(
 				author$project$Common$Vertex,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, y + author$project$Common$linethd2, 0),
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0)),
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, y + author$project$Common$linethd2, author$project$Staff$staffLineZ),
+				author$project$Staff$staffLineColor),
 				A2(
 				author$project$Common$Vertex,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, y - author$project$Common$linethd2, 0),
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 0, 0))
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 1, y - author$project$Common$linethd2, author$project$Staff$staffLineZ),
+				author$project$Staff$staffLineColor)
 			]),
 		_List_fromArray(
 			[
@@ -16023,12 +16022,11 @@ var elm$html$Html$Events$onInput = function (tagger) {
 			elm$html$Html$Events$alwaysStop,
 			A2(elm$json$Json$Decode$map, tagger, elm$html$Html$Events$targetValue)));
 };
-var elm_explorations$webgl$WebGL$Internal$Alpha = function (a) {
-	return {$: 0, a: a};
-};
-var elm_explorations$webgl$WebGL$alpha = elm_explorations$webgl$WebGL$Internal$Alpha;
-var elm_explorations$webgl$WebGL$Internal$Antialias = {$: 3};
-var elm_explorations$webgl$WebGL$antialias = elm_explorations$webgl$WebGL$Internal$Antialias;
+var elm_explorations$webgl$WebGL$Internal$ClearColor = F4(
+	function (a, b, c, d) {
+		return {$: 4, a: a, b: b, c: c, d: d};
+	});
+var elm_explorations$webgl$WebGL$clearColor = elm_explorations$webgl$WebGL$Internal$ClearColor;
 var elm_explorations$webgl$WebGL$Internal$Depth = function (a) {
 	return {$: 1, a: a};
 };
@@ -16037,13 +16035,6 @@ var elm_explorations$webgl$WebGL$toHtmlWith = F3(
 	function (options, attributes, entities) {
 		return A3(_WebGL_toHtml, options, attributes, entities);
 	});
-var elm_explorations$webgl$WebGL$toHtml = elm_explorations$webgl$WebGL$toHtmlWith(
-	_List_fromArray(
-		[
-			elm_explorations$webgl$WebGL$alpha(true),
-			elm_explorations$webgl$WebGL$antialias,
-			elm_explorations$webgl$WebGL$depth(1)
-		]));
 var mdgriffith$elm_ui$Internal$Model$Height = function (a) {
 	return {$: 8, a: a};
 };
@@ -21487,8 +21478,13 @@ var author$project$Main$view = function (model) {
 					_List_fromArray(
 						[
 							mdgriffith$elm_ui$Element$html(
-							A2(
-								elm_explorations$webgl$WebGL$toHtml,
+							A3(
+								elm_explorations$webgl$WebGL$toHtmlWith,
+								_List_fromArray(
+									[
+										elm_explorations$webgl$WebGL$depth(1),
+										A4(elm_explorations$webgl$WebGL$clearColor, 0.97, 0.97, 0.97, 1.0)
+									]),
 								_List_fromArray(
 									[
 										elm$html$Html$Attributes$width(author$project$Main$glWidth),
@@ -21515,7 +21511,7 @@ var author$project$Main$view = function (model) {
 																[x]);
 														},
 														model.p),
-													A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 1, 0)),
+													A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0.7, 0.25)),
 													_Utils_Tuple2(
 													_List_fromArray(
 														[
