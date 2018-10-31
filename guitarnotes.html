@@ -6391,7 +6391,7 @@ var elm$core$Set$Set_elm_builtin = elm$core$Basics$identity;
 var elm$core$Set$empty = elm$core$Dict$empty;
 var bburdette$typed_collections$TSet$empty = F2(
 	function (ktc, ctk) {
-		return {l: ctk, F: ktc, b: elm$core$Set$empty};
+		return {m: ctk, F: ktc, b: elm$core$Set$empty};
 	});
 var author$project$Staff$pitchClassEmptySet = A2(bburdette$typed_collections$TSet$empty, author$project$Staff$pcToInt, author$project$Staff$intToPc);
 var author$project$Staff$cmajor = {cT: 0, cl: 'C Major', h: author$project$Staff$pitchClassEmptySet};
@@ -6846,7 +6846,7 @@ var author$project$Staff$makeTrebleStaff = function (ks) {
 	return A3(
 		author$project$Staff$makeStaff,
 		0,
-		{u: 5, o: 4},
+		{u: 5, p: 4},
 		ks);
 };
 var elm$browser$Browser$External = function (a) {
@@ -7461,7 +7461,7 @@ var author$project$Main$init = function (_n0) {
 				author$project$Neck$init,
 				author$project$Neck$makeNeck(0),
 				-0.5),
-			p: _List_Nil,
+			k: _List_Nil,
 			bc: 0,
 			J: author$project$Staff$makeTrebleStaff(author$project$Staff$cmajor),
 			y: {ai: 0, aj: 0}
@@ -7752,14 +7752,14 @@ var author$project$Staff$pcIndex = function (pc) {
 	}
 };
 var author$project$Staff$bottomLine = function (st) {
-	return author$project$Staff$pcIndex(st.U.o) + (st.U.u * 7);
+	return author$project$Staff$pcIndex(st.U.p) + (st.U.u * 7);
 };
 var author$project$Staff$Bass = 1;
 var author$project$Staff$makeBassStaff = function (ks) {
 	return A3(
 		author$project$Staff$makeStaff,
 		1,
-		{u: 3, o: 6},
+		{u: 3, p: 6},
 		ks);
 };
 var author$project$Staff$setKeySig = F2(
@@ -7829,8 +7829,8 @@ var author$project$Staff$sharpFlatRule = F2(
 	});
 var author$project$Staff$pcNoteToMidi = F2(
 	function (keysig, pcn) {
-		var midipc = author$project$Staff$pcToInt(pcn.o);
-		var mbacc = A2(bburdette$typed_collections$TSet$member, pcn.o, keysig.h) ? elm$core$Maybe$Just(keysig.cT) : elm$core$Maybe$Nothing;
+		var midipc = author$project$Staff$pcToInt(pcn.p);
+		var mbacc = A2(bburdette$typed_collections$TSet$member, pcn.p, keysig.h) ? elm$core$Maybe$Just(keysig.cT) : elm$core$Maybe$Nothing;
 		return (A2(author$project$Staff$sharpFlatRule, mbacc, pcn.cT) + midipc) + (pcn.u * 12);
 	});
 var author$project$Staff$siToPc = function (i) {
@@ -7858,7 +7858,7 @@ var author$project$Staff$staffNoteToPcNote = function (sn) {
 	return {
 		cT: sn.cT,
 		u: (sn.er / 7) | 0,
-		o: author$project$Staff$siToPc(sn.er)
+		p: author$project$Staff$siToPc(sn.er)
 	};
 };
 var author$project$Staff$staffNoteToMidi = F2(
@@ -7960,22 +7960,22 @@ var author$project$Main$update = F2(
 					var _n2 = function () {
 						var _n3 = _Utils_Tuple2(
 							author$project$Neck$pressedNote(neck),
-							elm$core$List$head(model.p));
+							elm$core$List$head(model.k));
 						if ((!_n3.a.$) && (!_n3.b.$)) {
 							var pn = _n3.a.a;
 							var rn = _n3.b.a;
 							var s = model.y;
 							return _Utils_eq(pn, rn) ? _Utils_Tuple2(
-								author$project$Common$rest(model.p),
+								author$project$Common$rest(model.k),
 								_Utils_update(
 									s,
 									{ai: model.y.ai + 1})) : _Utils_Tuple2(
-								model.p,
+								model.k,
 								_Utils_update(
 									s,
 									{aj: model.y.aj + 1}));
 						} else {
-							return _Utils_Tuple2(model.p, model.y);
+							return _Utils_Tuple2(model.k, model.y);
 						}
 					}();
 					var nrn = _n2.a;
@@ -7983,7 +7983,7 @@ var author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{_: neck, p: nrn, y: stats}),
+							{_: neck, k: nrn, y: stats}),
 						(_Utils_cmp(
 							elm$core$List$length(nrn),
 							author$project$Main$pendingNoteCount) < 0) ? A2(
@@ -8025,7 +8025,7 @@ var author$project$Main$update = F2(
 							_Utils_update(
 								model,
 								{
-									p: _List_Nil,
+									k: _List_Nil,
 									J: A2(author$project$Staff$setKeySig, staff, k),
 									y: {ai: 0, aj: 0}
 								}),
@@ -8049,18 +8049,26 @@ var author$project$Main$update = F2(
 										_Utils_update(
 											model,
 											{
+												k: _List_Nil,
 												J: author$project$Staff$makeTrebleStaff(staff.bq)
 											}),
-										elm$core$Platform$Cmd$none);
+										A2(
+											elm$random$Random$generate,
+											author$project$Main$RandomNote,
+											A2(elm$random$Random$int, 0, 8)));
 								case 'Bass Clef':
 									var staff = _n7.b.a;
 									return _Utils_Tuple2(
 										_Utils_update(
 											model,
 											{
+												k: _List_Nil,
 												J: author$project$Staff$makeBassStaff(staff.bq)
 											}),
-										elm$core$Platform$Cmd$none);
+										A2(
+											elm$random$Random$generate,
+											author$project$Main$RandomNote,
+											A2(elm$random$Random$int, 0, 8)));
 								default:
 									break _n7$2;
 							}
@@ -8105,7 +8113,7 @@ var author$project$Main$update = F2(
 					if (!_n10.$) {
 						var s = _n10.a;
 						var nrn = _Utils_ap(
-							model.p,
+							model.k,
 							_List_fromArray(
 								[
 									A2(
@@ -8119,7 +8127,7 @@ var author$project$Main$update = F2(
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
-								{p: nrn}),
+								{k: nrn}),
 							(_Utils_cmp(
 								elm$core$List$length(nrn),
 								author$project$Main$pendingNoteCount) < 0) ? A2(
@@ -8632,7 +8640,7 @@ var author$project$Staff$midiToPcNote = F2(
 			var pc = _n1.a;
 			var mbas = _n1.b;
 			return elm$core$Maybe$Just(
-				{cT: mbas, u: oct, o: pc});
+				{cT: mbas, u: oct, p: pc});
 		} else {
 			return elm$core$Maybe$Nothing;
 		}
@@ -8640,7 +8648,7 @@ var author$project$Staff$midiToPcNote = F2(
 var author$project$Staff$pcNoteToStaffNote = function (pcn) {
 	return {
 		cT: pcn.cT,
-		er: author$project$Staff$pcIndex(pcn.o) + (pcn.u * 7)
+		er: author$project$Staff$pcIndex(pcn.p) + (pcn.u * 7)
 	};
 };
 var elm$core$Maybe$map = F2(
@@ -22021,7 +22029,7 @@ var author$project$Main$view = function (model) {
 															return _List_fromArray(
 																[x]);
 														},
-														model.p),
+														model.k),
 													A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0.7, 0.25)),
 													_Utils_Tuple2(
 													_List_fromArray(
