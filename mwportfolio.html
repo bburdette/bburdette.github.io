@@ -11588,7 +11588,22 @@ var author$project$Main$otherProjects = A2(
 			_List_Nil,
 			_List_fromArray(
 				[
-					mdgriffith$elm_ui$Element$text('I have a lot of side projects I\'ve worked on over the years!  Some of these are on my '),
+					mdgriffith$elm_ui$Element$text('Lately I\'ve been working on a little practice tool for learning to read music for stringed instruments - guitar, cello, violin, bass, banjo.  Check it out at '),
+					A2(
+					mdgriffith$elm_ui$Element$newTabLink,
+					author$project$Common$linkStyle,
+					{
+						label: mdgriffith$elm_ui$Element$text('music-reader.com'),
+						url: 'http://www.music-reader.com'
+					}),
+					mdgriffith$elm_ui$Element$text('.')
+				])),
+			A2(
+			mdgriffith$elm_ui$Element$paragraph,
+			_List_Nil,
+			_List_fromArray(
+				[
+					mdgriffith$elm_ui$Element$text('I have a lot of other side projects I\'ve worked on over the years!  Some of these are on my '),
 					A2(
 					mdgriffith$elm_ui$Element$newTabLink,
 					author$project$Common$linkStyle,
