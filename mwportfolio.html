@@ -11571,127 +11571,212 @@ var author$project$Main$CyMsg = function (a) {
 	return {$: 'CyMsg', a: a};
 };
 var author$project$TangoColors$darkGrey = A3(mdgriffith$elm_ui$Element$rgb255, 186, 189, 182);
-var author$project$Main$otherProjects = A2(
-	mdgriffith$elm_ui$Element$column,
-	_List_fromArray(
-		[
-			mdgriffith$elm_ui$Element$spacing(5)
-		]),
-	_List_fromArray(
-		[
-			A2(
-			mdgriffith$elm_ui$Element$el,
-			author$project$Common$headingStyle,
-			mdgriffith$elm_ui$Element$text('Side projects and open source')),
-			A2(
-			mdgriffith$elm_ui$Element$paragraph,
-			_List_Nil,
-			_List_fromArray(
-				[
-					mdgriffith$elm_ui$Element$text('Lately I\'ve been working on a little practice tool for learning to read music for stringed instruments - guitar, cello, violin, bass, banjo.  Check it out at '),
-					A2(
-					mdgriffith$elm_ui$Element$newTabLink,
-					author$project$Common$linkStyle,
-					{
-						label: mdgriffith$elm_ui$Element$text('music-reader.com'),
-						url: 'http://www.music-reader.com'
-					}),
-					mdgriffith$elm_ui$Element$text('.')
-				])),
-			A2(
-			mdgriffith$elm_ui$Element$paragraph,
-			_List_Nil,
-			_List_fromArray(
-				[
-					mdgriffith$elm_ui$Element$text('I have a lot of other side projects I\'ve worked on over the years!  Some of these are on my '),
-					A2(
-					mdgriffith$elm_ui$Element$newTabLink,
-					author$project$Common$linkStyle,
-					{
-						label: mdgriffith$elm_ui$Element$text('github profile'),
-						url: 'https://github.com/bburdette'
-					}),
-					mdgriffith$elm_ui$Element$text('.')
-				])),
-			A2(
-			mdgriffith$elm_ui$Element$paragraph,
-			_List_Nil,
-			_List_fromArray(
-				[
-					mdgriffith$elm_ui$Element$text('Not shown are the various games I made when I was into writing games in C++.  The first of these was '),
-					A2(
-					mdgriffith$elm_ui$Element$newTabLink,
-					author$project$Common$linkStyle,
-					{
-						label: mdgriffith$elm_ui$Element$text('Pongeroids'),
-						url: 'https://duckduckgo.com/?q=pongeroids&t=ffnt&ia=web'
-					}),
-					mdgriffith$elm_ui$Element$text(' for the ill fated BeOS operating system.  Unbelievably there is evidence of people still playing it in '),
-					A2(
-					mdgriffith$elm_ui$Element$newTabLink,
-					author$project$Common$linkStyle,
-					{
-						label: mdgriffith$elm_ui$Element$text('2017'),
-						url: 'https://arstechnica.com/information-technology/2017/07/ars-spends-too-much-time-trying-to-work-in-haiku-the-beos-successor/'
-					}),
-					mdgriffith$elm_ui$Element$text(' - you can see a screenshot of it on image 10 or so in the linked slideshow.')
-				])),
-			A2(
-			mdgriffith$elm_ui$Element$el,
-			author$project$Common$headingStyle,
-			mdgriffith$elm_ui$Element$text('Laser measurement systems')),
-			A2(
-			mdgriffith$elm_ui$Element$paragraph,
-			_List_Nil,
-			_List_fromArray(
-				[
-					mdgriffith$elm_ui$Element$text('For many years I was a principal developer for Bytewise Measurement Systems, which was purchased by Starrett a few years ago.  I did most of the software work on the '),
-					A2(
-					mdgriffith$elm_ui$Element$newTabLink,
-					author$project$Common$linkStyle,
-					{
-						label: mdgriffith$elm_ui$Element$text('Profile360 project'),
-						url: 'http://www.starrett.com/metrology/metrology-products/laser-measurement-systems'
-					}),
-					mdgriffith$elm_ui$Element$text(', building it pretty much from the ground up, with a lot of input into the physical machine design as well as writing most of the software.  These machines measure extruded products like windshield wipers or car door seals, that kind of thing.')
-				])),
-			A2(
-			mdgriffith$elm_ui$Element$paragraph,
-			_List_Nil,
-			_List_fromArray(
-				[
-					mdgriffith$elm_ui$Element$text('Not shown on their website is a one-off measurement system we did to measure jet engine turbine blades.  That involved some robotics and was (mostly) a pretty fun project.  It was neat to see the turbine manufacturing process.')
-				])),
-			A2(
-			mdgriffith$elm_ui$Element$el,
-			author$project$Common$headingStyle,
-			mdgriffith$elm_ui$Element$text('ThinkTopic and what I\'m doing now')),
-			A2(
-			mdgriffith$elm_ui$Element$paragraph,
-			_List_Nil,
-			_List_fromArray(
-				[
-					mdgriffith$elm_ui$Element$text('Since the cyclophone project wound down in 2015 I\'ve been doing other things.  For a few years I was very busy working with ThinkTopic, a consultancy that did web development and machine learning.'),
-					mdgriffith$elm_ui$Element$text('  Currently I\'m working on my own '),
-					A2(
-					mdgriffith$elm_ui$Element$newTabLink,
-					author$project$Common$linkStyle,
-					{
-						label: mdgriffith$elm_ui$Element$text('web app'),
-						url: 'https://www.practica.site'
-					}),
-					mdgriffith$elm_ui$Element$text(', which is designed to help people practice things - like a musical instrument, or learning vim commands, or really whatever.  Still pre-alpha though!  '),
-					mdgriffith$elm_ui$Element$text('The past five or six years I\'ve really been focusing a lot on bluegrass guitar too.  Its a pretty high mountain to climb, that bluegrass guitar, but there\'s a really vibrant bluegrass scene in this area and its really a lot of fun.')
-				])),
-			mdgriffith$elm_ui$Element$text(''),
-			A2(
-			mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					mdgriffith$elm_ui$Element$Font$color(author$project$TangoColors$darkGrey)
-				]),
-			mdgriffith$elm_ui$Element$text('© 2018 Ben Burdette'))
-		]));
+var mdgriffith$elm_ui$Element$Font$italic = mdgriffith$elm_ui$Internal$Model$htmlClass(mdgriffith$elm_ui$Internal$Style$classes.italic);
+var author$project$Main$otherProjects = function (vp) {
+	return A2(
+		mdgriffith$elm_ui$Element$column,
+		_List_fromArray(
+			[
+				mdgriffith$elm_ui$Element$spacing(5)
+			]),
+		_List_fromArray(
+			[
+				A2(
+				mdgriffith$elm_ui$Element$el,
+				author$project$Common$headingStyle,
+				mdgriffith$elm_ui$Element$text('Side projects and open source')),
+				A2(
+				mdgriffith$elm_ui$Element$paragraph,
+				_List_Nil,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$text('Lately I\'ve been working on a little practice tool for learning to read music for stringed instruments - guitar, cello, violin, bass, banjo.  Check it out at '),
+						A2(
+						mdgriffith$elm_ui$Element$newTabLink,
+						author$project$Common$linkStyle,
+						{
+							label: mdgriffith$elm_ui$Element$text('music-reader.com'),
+							url: 'http://www.music-reader.com'
+						}),
+						mdgriffith$elm_ui$Element$text('.')
+					])),
+				A2(
+				mdgriffith$elm_ui$Element$image,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$centerX,
+						mdgriffith$elm_ui$Element$width(
+						mdgriffith$elm_ui$Element$px(
+							A2(
+								elm$core$Basics$min,
+								200,
+								elm$core$Basics$round(vp.viewport.width * 0.5))))
+					]),
+				{description: 'music-reader game', src: 'https://bburdette.github.io/other-media/music-reader.png'}),
+				A2(
+				mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[mdgriffith$elm_ui$Element$centerX, mdgriffith$elm_ui$Element$Font$italic]),
+				mdgriffith$elm_ui$Element$text('music-reader.com')),
+				A2(
+				mdgriffith$elm_ui$Element$paragraph,
+				_List_Nil,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$text('I\'m also working on a new instrument - a horn amplified resonator guitar.  I\'ve never seen one like it, so this will be interesting to hear when its done.  It will hopefully have more bass than the usual resonator, as well as being unreasonably loud!')
+					])),
+				A2(
+				mdgriffith$elm_ui$Element$row,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$width(mdgriffith$elm_ui$Element$fill)
+					]),
+				_List_fromArray(
+					[
+						A2(
+						mdgriffith$elm_ui$Element$column,
+						_List_fromArray(
+							[mdgriffith$elm_ui$Element$centerX]),
+						_List_fromArray(
+							[
+								A2(
+								mdgriffith$elm_ui$Element$image,
+								_List_fromArray(
+									[
+										mdgriffith$elm_ui$Element$width(
+										mdgriffith$elm_ui$Element$px(
+											A2(
+												elm$core$Basics$min,
+												300,
+												elm$core$Basics$round(vp.viewport.width * 0.5))))
+									]),
+								{description: 'guitar model', src: 'https://bburdette.github.io/other-media/guitar-model.png'}),
+								A2(
+								mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[mdgriffith$elm_ui$Element$centerX, mdgriffith$elm_ui$Element$Font$italic]),
+								mdgriffith$elm_ui$Element$text('openscad guitar model'))
+							])),
+						A2(
+						mdgriffith$elm_ui$Element$column,
+						_List_fromArray(
+							[mdgriffith$elm_ui$Element$centerX]),
+						_List_fromArray(
+							[
+								A2(
+								mdgriffith$elm_ui$Element$image,
+								_List_fromArray(
+									[
+										mdgriffith$elm_ui$Element$width(
+										mdgriffith$elm_ui$Element$px(
+											A2(
+												elm$core$Basics$min,
+												200,
+												elm$core$Basics$round(vp.viewport.width * 0.5))))
+									]),
+								{description: 'guitar machined in foam', src: 'https://bburdette.github.io/other-media/guitar-and-foam.jpg'}),
+								A2(
+								mdgriffith$elm_ui$Element$el,
+								_List_fromArray(
+									[mdgriffith$elm_ui$Element$centerX, mdgriffith$elm_ui$Element$Font$italic]),
+								mdgriffith$elm_ui$Element$text('test cut in foam'))
+							]))
+					])),
+				A2(
+				mdgriffith$elm_ui$Element$paragraph,
+				_List_Nil,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$text('I have a lot of other programming side projects I\'ve worked on over the years!  Some of these are on my '),
+						A2(
+						mdgriffith$elm_ui$Element$newTabLink,
+						author$project$Common$linkStyle,
+						{
+							label: mdgriffith$elm_ui$Element$text('github profile'),
+							url: 'https://github.com/bburdette'
+						}),
+						mdgriffith$elm_ui$Element$text('.')
+					])),
+				A2(
+				mdgriffith$elm_ui$Element$paragraph,
+				_List_Nil,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$text('Not shown are the various games I made when I was into writing games in C++.  The first of these was '),
+						A2(
+						mdgriffith$elm_ui$Element$newTabLink,
+						author$project$Common$linkStyle,
+						{
+							label: mdgriffith$elm_ui$Element$text('Pongeroids'),
+							url: 'https://duckduckgo.com/?q=pongeroids&t=ffnt&ia=web'
+						}),
+						mdgriffith$elm_ui$Element$text(' for the ill fated BeOS operating system, back in the 90s.  Improbably, there is evidence of people still playing it in '),
+						A2(
+						mdgriffith$elm_ui$Element$newTabLink,
+						author$project$Common$linkStyle,
+						{
+							label: mdgriffith$elm_ui$Element$text('2017'),
+							url: 'https://arstechnica.com/information-technology/2017/07/ars-spends-too-much-time-trying-to-work-in-haiku-the-beos-successor/'
+						}),
+						mdgriffith$elm_ui$Element$text(' - you can see a screenshot of it on image 10 or so in the linked slideshow.')
+					])),
+				A2(
+				mdgriffith$elm_ui$Element$el,
+				author$project$Common$headingStyle,
+				mdgriffith$elm_ui$Element$text('Laser measurement systems')),
+				A2(
+				mdgriffith$elm_ui$Element$paragraph,
+				_List_Nil,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$text('For many years I was a principal developer for Bytewise Measurement Systems, which was purchased by Starrett a few years ago.  I did most of the software work on the '),
+						A2(
+						mdgriffith$elm_ui$Element$newTabLink,
+						author$project$Common$linkStyle,
+						{
+							label: mdgriffith$elm_ui$Element$text('Profile360 project'),
+							url: 'http://www.starrett.com/metrology/metrology-products/laser-measurement-systems'
+						}),
+						mdgriffith$elm_ui$Element$text(', building it pretty much from the ground up, with a lot of input into the physical machine design as well as writing most of the software.  These machines measure extruded products like windshield wipers or car door seals, that kind of thing.')
+					])),
+				A2(
+				mdgriffith$elm_ui$Element$paragraph,
+				_List_Nil,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$text('Not shown on their website is a one-off measurement system we did to measure jet engine turbine blades.  That involved some robotics and was (mostly) a pretty fun project.  It was neat to see the turbine manufacturing process.')
+					])),
+				A2(
+				mdgriffith$elm_ui$Element$el,
+				author$project$Common$headingStyle,
+				mdgriffith$elm_ui$Element$text('ThinkTopic and what I\'m doing now')),
+				A2(
+				mdgriffith$elm_ui$Element$paragraph,
+				_List_Nil,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$text('Since the cyclophone project wound down in 2015 I\'ve been doing other things.  For a few years I was very busy working with ThinkTopic, a consultancy that did web development and machine learning.'),
+						mdgriffith$elm_ui$Element$text('  Currently I\'m working on my own '),
+						A2(
+						mdgriffith$elm_ui$Element$newTabLink,
+						author$project$Common$linkStyle,
+						{
+							label: mdgriffith$elm_ui$Element$text('web app'),
+							url: 'https://www.practica.site'
+						}),
+						mdgriffith$elm_ui$Element$text(', which is designed to help people practice things - like a musical instrument, or learning vim commands, or really whatever.  Still pre-alpha though!  '),
+						mdgriffith$elm_ui$Element$text('The past five or six years I\'ve really been focusing a lot on bluegrass guitar too.  Its a pretty high mountain to climb, that bluegrass guitar, but there\'s a really vibrant bluegrass scene in this area and its really a lot of fun.')
+					])),
+				mdgriffith$elm_ui$Element$text(''),
+				A2(
+				mdgriffith$elm_ui$Element$el,
+				_List_fromArray(
+					[
+						mdgriffith$elm_ui$Element$Font$color(author$project$TangoColors$darkGrey)
+					]),
+				mdgriffith$elm_ui$Element$text('© 2018 Ben Burdette'))
+			]));
+};
 var author$project$Main$eview = function (model) {
 	return A2(
 		mdgriffith$elm_ui$Element$column,
@@ -11722,7 +11807,7 @@ var author$project$Main$eview = function (model) {
 				mdgriffith$elm_ui$Element$map,
 				author$project$Main$CyMsg,
 				A2(author$project$CyclophoneOverview$view, model.vp, model.cyState)),
-				author$project$Main$otherProjects
+				author$project$Main$otherProjects(model.vp)
 			]));
 };
 var mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
