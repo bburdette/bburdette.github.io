@@ -5159,6 +5159,7 @@ var author$project$Main$paramsParser = A2(
 				elm$parser$Parser$succeed(elm$core$Basics$identity),
 				elm$parser$Parser$symbol('&')),
 			author$project$Main$paramParser)));
+var author$project$Main$botSpawnRadius = 0.6;
 var elm$core$Basics$cos = _Basics_cos;
 var elm$core$Basics$fdiv = _Basics_fdiv;
 var elm$core$Basics$mul = _Basics_mul;
@@ -5643,7 +5644,7 @@ var author$project$Main$urlBots = function (pd) {
 		var count = _n0.a;
 		return A2(
 			author$project$Main$defaultBotPositions,
-			0.5,
+			author$project$Main$botSpawnRadius,
 			elm$core$Array$fromList(
 				A2(
 					elm$core$List$filterMap,
@@ -5997,12 +5998,6 @@ var author$project$EvalStep$TList = function (a) {
 var author$project$EvalStep$TNumber = function (a) {
 	return {$: 1, a: a};
 };
-var elm$core$Basics$modBy = _Basics_modBy;
-var author$project$Main$getOpIdx = F3(
-	function (robot, rqidx, count) {
-		var i = A2(elm$core$Basics$modBy, count, (1 + rqidx) + robot);
-		return _Utils_eq(i, robot) ? elm$core$Maybe$Nothing : elm$core$Maybe$Just(i);
-	});
 var elm$core$List$intersperse = F2(
 	function (sep, xs) {
 		if (!xs.b) {
@@ -6067,6 +6062,41 @@ var author$project$Show$showTerm = function (term) {
 			return 'sideeffector';
 	}
 };
+var author$project$Show$showTerms = function (terms) {
+	return '[' + (elm$core$String$concat(
+		A2(
+			elm$core$List$intersperse,
+			',',
+			A2(elm$core$List$map, author$project$Show$showTerm, terms))) + ']');
+};
+var author$project$Main$fromPolar = F3(
+	function (ns, state, terms) {
+		if ((((terms.b && (terms.a.$ === 1)) && terms.b.b) && (terms.b.a.$ === 1)) && (!terms.b.b.b)) {
+			var a = terms.a.a;
+			var _n1 = terms.b;
+			var m = _n1.a.a;
+			return elm$core$Result$Ok(
+				_Utils_Tuple2(
+					ns,
+					author$project$EvalStep$TList(
+						_List_fromArray(
+							[
+								author$project$EvalStep$TNumber(
+								elm$core$Basics$cos(a) * m),
+								author$project$EvalStep$TNumber(
+								elm$core$Basics$sin(a) * m)
+							]))));
+		} else {
+			return elm$core$Result$Err(
+				'fromPolar expected two numbers, got: ' + author$project$Show$showTerms(terms));
+		}
+	});
+var elm$core$Basics$modBy = _Basics_modBy;
+var author$project$Main$getOpIdx = F3(
+	function (robot, rqidx, count) {
+		var i = A2(elm$core$Basics$modBy, count, (1 + rqidx) + robot);
+		return _Utils_eq(i, robot) ? elm$core$Maybe$Nothing : elm$core$Maybe$Just(i);
+	});
 var elm$core$Basics$round = _Basics_round;
 var elm$core$Tuple$second = function (_n0) {
 	var y = _n0.b;
@@ -6242,13 +6272,6 @@ var author$project$Main$opponentCount = F3(
 						A2(elm$core$List$map, author$project$Show$showTerm, argterms))));
 		}
 	});
-var author$project$Show$showTerms = function (terms) {
-	return '[' + (elm$core$String$concat(
-		A2(
-			elm$core$List$intersperse,
-			',',
-			A2(elm$core$List$map, author$project$Show$showTerm, terms))) + ']');
-};
 var elm$core$List$takeReverse = F3(
 	function (n, list, kept) {
 		takeReverse:
@@ -6491,6 +6514,30 @@ var author$project$Main$setThrust = F3(
 						elm$core$List$cons,
 						'thrust takes 2 arguments!  ',
 						A2(elm$core$List$map, author$project$Show$showTerm, argterms))));
+		}
+	});
+var elm$core$Basics$atan = _Basics_atan;
+var elm$core$Basics$sqrt = _Basics_sqrt;
+var author$project$Main$toPolar = F3(
+	function (ns, state, terms) {
+		if ((((terms.b && (terms.a.$ === 1)) && terms.b.b) && (terms.b.a.$ === 1)) && (!terms.b.b.b)) {
+			var x = terms.a.a;
+			var _n1 = terms.b;
+			var y = _n1.a.a;
+			var m = elm$core$Basics$sqrt((x * x) + (y * y));
+			var a = elm$core$Basics$atan(y / x) + ((x < 0) ? elm$core$Basics$pi : 0);
+			return elm$core$Result$Ok(
+				_Utils_Tuple2(
+					ns,
+					author$project$EvalStep$TList(
+						_List_fromArray(
+							[
+								author$project$EvalStep$TNumber(a),
+								author$project$EvalStep$TNumber(m)
+							]))));
+		} else {
+			return elm$core$Result$Err(
+				'toPolar expected two numbers, got: ' + author$project$Show$showTerms(terms));
 		}
 	});
 var author$project$EvalStep$BuiltInStart = F3(
@@ -7215,40 +7262,50 @@ var author$project$Prelude$evalArgsSideEffector = function (fn) {
 };
 var author$project$Main$botftns = A3(
 	elm$core$Dict$insert,
-	'myVelocity',
+	'fromPolar',
 	author$project$EvalStep$TBuiltIn(
-		author$project$Prelude$evalArgsBuiltIn(author$project$Main$myVelocity)),
+		author$project$Prelude$evalArgsBuiltIn(author$project$Main$fromPolar)),
 	A3(
 		elm$core$Dict$insert,
-		'getVelocity',
+		'toPolar',
 		author$project$EvalStep$TBuiltIn(
-			author$project$Prelude$evalArgsBuiltIn(author$project$Main$getVelocity)),
+			author$project$Prelude$evalArgsBuiltIn(author$project$Main$toPolar)),
 		A3(
 			elm$core$Dict$insert,
-			'myPosition',
+			'myVelocity',
 			author$project$EvalStep$TBuiltIn(
-				author$project$Prelude$evalArgsBuiltIn(author$project$Main$myPosition)),
+				author$project$Prelude$evalArgsBuiltIn(author$project$Main$myVelocity)),
 			A3(
 				elm$core$Dict$insert,
-				'getPosition',
+				'getVelocity',
 				author$project$EvalStep$TBuiltIn(
-					author$project$Prelude$evalArgsBuiltIn(author$project$Main$getPosition)),
+					author$project$Prelude$evalArgsBuiltIn(author$project$Main$getVelocity)),
 				A3(
 					elm$core$Dict$insert,
-					'opponentCount',
+					'myPosition',
 					author$project$EvalStep$TBuiltIn(
-						author$project$Prelude$evalArgsBuiltIn(author$project$Main$opponentCount)),
+						author$project$Prelude$evalArgsBuiltIn(author$project$Main$myPosition)),
 					A3(
 						elm$core$Dict$insert,
-						'setThrust',
-						author$project$EvalStep$TSideEffector(
-							author$project$Prelude$evalArgsSideEffector(author$project$Main$setThrust)),
+						'getPosition',
+						author$project$EvalStep$TBuiltIn(
+							author$project$Prelude$evalArgsBuiltIn(author$project$Main$getPosition)),
 						A3(
 							elm$core$Dict$insert,
-							'print',
-							author$project$EvalStep$TSideEffector(
-								author$project$Prelude$evalArgsSideEffector(author$project$Main$print)),
-							elm$core$Dict$empty)))))));
+							'opponentCount',
+							author$project$EvalStep$TBuiltIn(
+								author$project$Prelude$evalArgsBuiltIn(author$project$Main$opponentCount)),
+							A3(
+								elm$core$Dict$insert,
+								'setThrust',
+								author$project$EvalStep$TSideEffector(
+									author$project$Prelude$evalArgsSideEffector(author$project$Main$setThrust)),
+								A3(
+									elm$core$Dict$insert,
+									'print',
+									author$project$EvalStep$TSideEffector(
+										author$project$Prelude$evalArgsSideEffector(author$project$Main$print)),
+									elm$core$Dict$empty)))))))));
 var author$project$Prelude$divide = F3(
 	function (ns, state, terms) {
 		if ((((terms.b && (terms.a.$ === 1)) && terms.b.b) && (terms.b.a.$ === 1)) && (!terms.b.b.b)) {
@@ -7264,26 +7321,23 @@ var author$project$Prelude$divide = F3(
 				'\'/\' requires two numeric arguments.  got: ' + author$project$Show$showTerms(terms));
 		}
 	});
-var author$project$Prelude$fromPolar = F3(
-	function (ns, state, terms) {
+var author$project$EvalStep$TBool = function (a) {
+	return {$: 4, a: a};
+};
+var author$project$Prelude$ffbOp = F4(
+	function (f, ns, state, terms) {
 		if ((((terms.b && (terms.a.$ === 1)) && terms.b.b) && (terms.b.a.$ === 1)) && (!terms.b.b.b)) {
-			var a = terms.a.a;
+			var x = terms.a.a;
 			var _n1 = terms.b;
-			var m = _n1.a.a;
+			var y = _n1.a.a;
 			return elm$core$Result$Ok(
 				_Utils_Tuple2(
 					ns,
-					author$project$EvalStep$TList(
-						_List_fromArray(
-							[
-								author$project$EvalStep$TNumber(
-								elm$core$Basics$cos(a) * m),
-								author$project$EvalStep$TNumber(
-								elm$core$Basics$sin(a) * m)
-							]))));
+					author$project$EvalStep$TBool(
+						A2(f, x, y))));
 		} else {
 			return elm$core$Result$Err(
-				'fromPolar expected two numbers, got: ' + author$project$Show$showTerms(terms));
+				'\'/\' requires two numeric arguments.  got: ' + author$project$Show$showTerms(terms));
 		}
 	});
 var author$project$Prelude$minus = F3(
@@ -7432,64 +7486,51 @@ var author$project$Prelude$plus = F3(
 					author$project$EvalStep$TNumber(0)),
 				terms));
 	});
-var elm$core$Basics$atan = _Basics_atan;
-var elm$core$Basics$sqrt = _Basics_sqrt;
-var author$project$Prelude$toPolar = F3(
-	function (ns, state, terms) {
-		if ((((terms.b && (terms.a.$ === 1)) && terms.b.b) && (terms.b.a.$ === 1)) && (!terms.b.b.b)) {
-			var x = terms.a.a;
-			var _n1 = terms.b;
-			var y = _n1.a.a;
-			var m = elm$core$Basics$sqrt((x * x) + (y * y));
-			var a = elm$core$Basics$atan(y / x) + ((x < 0) ? elm$core$Basics$pi : 0);
-			return elm$core$Result$Ok(
-				_Utils_Tuple2(
-					ns,
-					author$project$EvalStep$TList(
-						_List_fromArray(
-							[
-								author$project$EvalStep$TNumber(a),
-								author$project$EvalStep$TNumber(m)
-							]))));
-		} else {
-			return elm$core$Result$Err(
-				'toPolar expected two numbers, got: ' + author$project$Show$showTerms(terms));
-		}
-	});
 var author$project$Prelude$math = A3(
 	elm$core$Dict$insert,
-	'fromPolar',
+	'>=',
 	author$project$EvalStep$TBuiltIn(
-		author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$fromPolar)),
+		author$project$Prelude$evalArgsBuiltIn(
+			author$project$Prelude$ffbOp(elm$core$Basics$ge))),
 	A3(
 		elm$core$Dict$insert,
-		'toPolar',
+		'>',
 		author$project$EvalStep$TBuiltIn(
-			author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$toPolar)),
+			author$project$Prelude$evalArgsBuiltIn(
+				author$project$Prelude$ffbOp(elm$core$Basics$gt))),
 		A3(
 			elm$core$Dict$insert,
-			'/',
+			'<=',
 			author$project$EvalStep$TBuiltIn(
-				author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$divide)),
+				author$project$Prelude$evalArgsBuiltIn(
+					author$project$Prelude$ffbOp(elm$core$Basics$le))),
 			A3(
 				elm$core$Dict$insert,
-				'*',
+				'<',
 				author$project$EvalStep$TBuiltIn(
-					author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$multiply)),
+					author$project$Prelude$evalArgsBuiltIn(
+						author$project$Prelude$ffbOp(elm$core$Basics$lt))),
 				A3(
 					elm$core$Dict$insert,
-					'-',
+					'/',
 					author$project$EvalStep$TBuiltIn(
-						author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$minus)),
+						author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$divide)),
 					A3(
 						elm$core$Dict$insert,
-						'+',
+						'*',
 						author$project$EvalStep$TBuiltIn(
-							author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$plus)),
-						elm$core$Dict$empty))))));
-var author$project$EvalStep$TBool = function (a) {
-	return {$: 4, a: a};
-};
+							author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$multiply)),
+						A3(
+							elm$core$Dict$insert,
+							'-',
+							author$project$EvalStep$TBuiltIn(
+								author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$minus)),
+							A3(
+								elm$core$Dict$insert,
+								'+',
+								author$project$EvalStep$TBuiltIn(
+									author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$plus)),
+								elm$core$Dict$empty))))))));
 var author$project$Prelude$and = F3(
 	function (ns, state, terms) {
 		return A2(
@@ -7540,6 +7581,37 @@ var author$project$Prelude$break = F3(
 						A2(elm$core$List$map, author$project$Show$showTerm, terms))));
 		}
 	});
+var author$project$Prelude$builtInFn = function (fn) {
+	return function (bistep) {
+		switch (bistep.$) {
+			case 0:
+				var ns = bistep.a;
+				var state = bistep.b;
+				var terms = bistep.c;
+				var _n1 = A3(fn, ns, state, terms);
+				if (!_n1.$) {
+					var _n2 = _n1.a;
+					var nebins = _n2.a;
+					var term = _n2.b;
+					return A2(author$project$EvalStep$BuiltInFinal, nebins, term);
+				} else {
+					var e = _n1.a;
+					return author$project$EvalStep$BuiltInError(e);
+				}
+			case 1:
+				var ns = bistep.a;
+				var state = bistep.b;
+				var ets = bistep.c;
+				return author$project$EvalStep$BuiltInError('Unexpected \'BuiltInArgs\' to noEvalArgs built-in function');
+			case 2:
+				return author$project$EvalStep$BuiltInError('Unexpected \'BuiltInEval\' to noEvalArgs built-in function');
+			case 3:
+				return bistep;
+			default:
+				return bistep;
+		}
+	};
+};
 var author$project$Prelude$car = F3(
 	function (ns, state, terms) {
 		var _n0 = elm$core$List$head(terms);
@@ -7889,37 +7961,6 @@ var author$project$Prelude$loop = function (step) {
 			return step;
 	}
 };
-var author$project$Prelude$noEvalArgsBuiltIn = function (fn) {
-	return function (bistep) {
-		switch (bistep.$) {
-			case 0:
-				var ns = bistep.a;
-				var state = bistep.b;
-				var terms = bistep.c;
-				var _n1 = A3(fn, ns, state, terms);
-				if (!_n1.$) {
-					var _n2 = _n1.a;
-					var nebins = _n2.a;
-					var term = _n2.b;
-					return A2(author$project$EvalStep$BuiltInFinal, nebins, term);
-				} else {
-					var e = _n1.a;
-					return author$project$EvalStep$BuiltInError(e);
-				}
-			case 1:
-				var ns = bistep.a;
-				var state = bistep.b;
-				var ets = bistep.c;
-				return author$project$EvalStep$BuiltInError('Unexpected \'BuiltInArgs\' to noEvalArgs built-in function');
-			case 2:
-				return author$project$EvalStep$BuiltInError('Unexpected \'BuiltInEval\' to noEvalArgs built-in function');
-			case 3:
-				return bistep;
-			default:
-				return bistep;
-		}
-	};
-};
 var author$project$Prelude$or = F3(
 	function (ns, state, terms) {
 		return A2(
@@ -8031,7 +8072,7 @@ var author$project$Prelude$pRun = function (step) {
 			return step;
 	}
 };
-var author$project$Prelude$schelmIf = function (bistep) {
+var author$project$Prelude$schelmeIf = function (bistep) {
 	switch (bistep.$) {
 		case 0:
 			var ns = bistep.a;
@@ -8058,7 +8099,7 @@ var author$project$Prelude$schelmIf = function (bistep) {
 			var ns = bistep.a;
 			var state = bistep.b;
 			var ets = bistep.c;
-			return author$project$EvalStep$SideEffectorError('Unexpected \'SideEffectorArgs\' to schelmIf');
+			return author$project$EvalStep$SideEffectorError('Unexpected \'SideEffectorArgs\' to schelmeIf');
 		case 2:
 			var ns = bistep.a;
 			var state = bistep.b;
@@ -8089,7 +8130,7 @@ var author$project$Prelude$schelmIf = function (bistep) {
 							}
 						} else {
 							return author$project$EvalStep$SideEffectorError(
-								'invalid workterms to schelmIf: ' + author$project$Show$showTerms(workterms));
+								'invalid workterms to schelmeIf: ' + author$project$Show$showTerms(workterms));
 						}
 					} else {
 						return A3(author$project$EvalStep$SideEffectorFinal, ns, efstate, term);
@@ -8147,50 +8188,55 @@ var author$project$Prelude$prelude = A3(
 						A3(
 							elm$core$Dict$insert,
 							'if',
-							author$project$EvalStep$TSideEffector(author$project$Prelude$schelmIf),
+							author$project$EvalStep$TSideEffector(author$project$Prelude$schelmeIf),
 							A3(
 								elm$core$Dict$insert,
-								'list',
+								'quote',
 								author$project$EvalStep$TBuiltIn(
-									author$project$Prelude$noEvalArgsBuiltIn(author$project$Prelude$list)),
+									author$project$Prelude$builtInFn(author$project$Prelude$list)),
 								A3(
 									elm$core$Dict$insert,
-									'cons',
+									'list',
 									author$project$EvalStep$TBuiltIn(
-										author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$cons)),
+										author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$list)),
 									A3(
 										elm$core$Dict$insert,
-										'cdr',
+										'cons',
 										author$project$EvalStep$TBuiltIn(
-											author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$cdr)),
+											author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$cons)),
 										A3(
 											elm$core$Dict$insert,
-											'car',
+											'cdr',
 											author$project$EvalStep$TBuiltIn(
-												author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$car)),
+												author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$cdr)),
 											A3(
 												elm$core$Dict$insert,
-												'eq',
+												'car',
 												author$project$EvalStep$TBuiltIn(
-													author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$eq)),
+													author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$car)),
 												A3(
 													elm$core$Dict$insert,
-													'false',
-													author$project$EvalStep$TBool(false),
+													'eq',
+													author$project$EvalStep$TBuiltIn(
+														author$project$Prelude$evalArgsBuiltIn(author$project$Prelude$eq)),
 													A3(
 														elm$core$Dict$insert,
-														'true',
-														author$project$EvalStep$TBool(true),
+														'false',
+														author$project$EvalStep$TBool(false),
 														A3(
 															elm$core$Dict$insert,
-															'defn',
-															author$project$EvalStep$TBuiltIn(
-																author$project$Prelude$noEvalArgsBuiltIn(author$project$Prelude$defn)),
+															'true',
+															author$project$EvalStep$TBool(true),
 															A3(
 																elm$core$Dict$insert,
-																'def',
-																author$project$EvalStep$TBuiltIn(author$project$Prelude$def),
-																elm$core$Dict$empty))))))))))))))));
+																'defn',
+																author$project$EvalStep$TBuiltIn(
+																	author$project$Prelude$builtInFn(author$project$Prelude$defn)),
+																A3(
+																	elm$core$Dict$insert,
+																	'def',
+																	author$project$EvalStep$TBuiltIn(author$project$Prelude$def),
+																	elm$core$Dict$empty)))))))))))))))));
 var elm$core$Dict$foldl = F3(
 	function (func, acc, dict) {
 		foldl:
@@ -9753,7 +9799,7 @@ var author$project$Main$update = F2(
 					{
 						c: A2(
 							author$project$Main$defaultBotPositions,
-							0.5,
+							author$project$Main$botSpawnRadius,
 							A2(elm$core$Array$push, author$project$Main$emptyBot, model.c))
 					});
 				return _Utils_Tuple2(
@@ -9917,7 +9963,7 @@ var author$project$Main$update = F2(
 						model,
 						{
 							c: author$project$Main$unDead(
-								A2(author$project$Main$defaultBotPositions, 0.5, compiledBots)),
+								A2(author$project$Main$defaultBotPositions, author$project$Main$botSpawnRadius, compiledBots)),
 							ah: true,
 							p: elm$core$Dict$empty
 						}),
