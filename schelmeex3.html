@@ -7367,6 +7367,22 @@ var author$project$ParseHelp$listOf = function (aparser) {
 var author$project$SExpression$SList = function (a) {
 	return {$: 1, a: a};
 };
+var author$project$SExpression$rqspaces = A2(
+	elm$parser$Parser$ignorer,
+	A2(
+		elm$parser$Parser$ignorer,
+		elm$parser$Parser$succeed(0),
+		elm$parser$Parser$oneOf(
+			_List_fromArray(
+				[
+					elm$parser$Parser$symbol(' '),
+					elm$parser$Parser$symbol('\n'),
+					elm$parser$Parser$symbol('\t')
+				]))),
+	elm$parser$Parser$chompWhile(
+		function (_char) {
+			return (_char === ' ') || ((_char === '\n') || (_char === '\t'));
+		}));
 var author$project$SExpression$STerm = function (a) {
 	return {$: 0, a: a};
 };
@@ -7392,9 +7408,9 @@ var elm$parser$Parser$Advanced$chompIf = F2(
 var elm$parser$Parser$chompIf = function (isGood) {
 	return A2(elm$parser$Parser$Advanced$chompIf, isGood, elm$parser$Parser$UnexpectedChar);
 };
-var author$project$SExpression$sTerm = function () {
+var author$project$SExpression$nonquotedString = function () {
 	var stermchar = function (c) {
-		return (c !== '\'') && ((c !== ' ') && ((c !== '\n') && ((c !== '\t') && ((c !== '(') && (c !== ')')))));
+		return (c !== '\'') && ((c !== ' ') && ((c !== '\"') && ((c !== '\n') && ((c !== '\t') && ((c !== '(') && (c !== ')'))))));
 	};
 	return A2(
 		elm$parser$Parser$keeper,
@@ -7408,22 +7424,57 @@ var author$project$SExpression$sTerm = function () {
 					elm$parser$Parser$chompIf(stermchar)),
 				elm$parser$Parser$chompWhile(stermchar))));
 }();
-var author$project$SExpression$spaces = A2(
-	elm$parser$Parser$ignorer,
-	A2(
-		elm$parser$Parser$ignorer,
-		elm$parser$Parser$succeed(0),
-		elm$parser$Parser$oneOf(
-			_List_fromArray(
-				[
-					elm$parser$Parser$symbol(' '),
-					elm$parser$Parser$symbol('\n'),
-					elm$parser$Parser$symbol('\t')
-				]))),
-	elm$parser$Parser$chompWhile(
-		function (_char) {
-			return (_char === ' ') || ((_char === '\n') || (_char === '\t'));
-		}));
+var elm$parser$Parser$Expecting = function (a) {
+	return {$: 0, a: a};
+};
+var elm$parser$Parser$toToken = function (str) {
+	return A2(
+		elm$parser$Parser$Advanced$Token,
+		str,
+		elm$parser$Parser$Expecting(str));
+};
+var elm$parser$Parser$Advanced$findSubString = _Parser_findSubString;
+var elm$parser$Parser$Advanced$chompUntil = function (_n0) {
+	var str = _n0.a;
+	var expecting = _n0.b;
+	return function (s) {
+		var _n1 = A5(elm$parser$Parser$Advanced$findSubString, str, s.b, s.c_, s.cj, s.a);
+		var newOffset = _n1.a;
+		var newRow = _n1.b;
+		var newCol = _n1.c;
+		return _Utils_eq(newOffset, -1) ? A2(
+			elm$parser$Parser$Advanced$Bad,
+			false,
+			A4(elm$parser$Parser$Advanced$fromInfo, newRow, newCol, expecting, s.c)) : A3(
+			elm$parser$Parser$Advanced$Good,
+			_Utils_cmp(s.b, newOffset) < 0,
+			0,
+			{cj: newCol, c: s.c, d: s.d, b: newOffset, c_: newRow, a: s.a});
+	};
+};
+var elm$parser$Parser$chompUntil = function (str) {
+	return elm$parser$Parser$Advanced$chompUntil(
+		elm$parser$Parser$toToken(str));
+};
+var author$project$SExpression$quotedString = A2(
+	elm$parser$Parser$keeper,
+	elm$parser$Parser$succeed(author$project$SExpression$STerm),
+	elm$parser$Parser$getChompedString(
+		A2(
+			elm$parser$Parser$ignorer,
+			A2(
+				elm$parser$Parser$ignorer,
+				A2(
+					elm$parser$Parser$ignorer,
+					elm$parser$Parser$succeed(0),
+					elm$parser$Parser$chompIf(
+						elm$core$Basics$eq('\"'))),
+				elm$parser$Parser$chompUntil('\"')),
+			elm$parser$Parser$chompIf(
+				elm$core$Basics$always(true)))));
+var author$project$SExpression$sTerm = elm$parser$Parser$oneOf(
+	_List_fromArray(
+		[author$project$SExpression$nonquotedString, author$project$SExpression$quotedString]));
 var elm$parser$Parser$Advanced$lazy = function (thunk) {
 	return function (s) {
 		var _n0 = thunk(0);
@@ -7432,21 +7483,32 @@ var elm$parser$Parser$Advanced$lazy = function (thunk) {
 	};
 };
 var elm$parser$Parser$lazy = elm$parser$Parser$Advanced$lazy;
+var elm$parser$Parser$Advanced$spaces = elm$parser$Parser$Advanced$chompWhile(
+	function (c) {
+		return (c === ' ') || ((c === '\n') || (c === '\r'));
+	});
+var elm$parser$Parser$spaces = elm$parser$Parser$Advanced$spaces;
 function author$project$SExpression$cyclic$sSxps() {
 	return A2(
 		elm$parser$Parser$keeper,
 		A2(
 			elm$parser$Parser$keeper,
-			elm$parser$Parser$succeed(elm$core$List$cons),
-			author$project$SExpression$cyclic$sSxp()),
-		author$project$ParseHelp$listOf(
 			A2(
-				elm$parser$Parser$keeper,
+				elm$parser$Parser$ignorer,
+				elm$parser$Parser$succeed(elm$core$List$cons),
+				elm$parser$Parser$spaces),
+			author$project$SExpression$cyclic$sSxp()),
+		A2(
+			elm$parser$Parser$ignorer,
+			author$project$ParseHelp$listOf(
 				A2(
-					elm$parser$Parser$ignorer,
-					elm$parser$Parser$succeed(elm$core$Basics$identity),
-					author$project$SExpression$spaces),
-				author$project$SExpression$cyclic$sSxp())));
+					elm$parser$Parser$keeper,
+					A2(
+						elm$parser$Parser$ignorer,
+						elm$parser$Parser$succeed(elm$core$Basics$identity),
+						elm$parser$Parser$backtrackable(author$project$SExpression$rqspaces)),
+					author$project$SExpression$cyclic$sSxp())),
+			elm$parser$Parser$spaces));
 }
 function author$project$SExpression$cyclic$sSxp() {
 	return elm$parser$Parser$oneOf(
