@@ -4372,43 +4372,6 @@ function _Browser_load(url)
 
 
 
-var _Bitwise_and = F2(function(a, b)
-{
-	return a & b;
-});
-
-var _Bitwise_or = F2(function(a, b)
-{
-	return a | b;
-});
-
-var _Bitwise_xor = F2(function(a, b)
-{
-	return a ^ b;
-});
-
-function _Bitwise_complement(a)
-{
-	return ~a;
-};
-
-var _Bitwise_shiftLeftBy = F2(function(offset, a)
-{
-	return a << offset;
-});
-
-var _Bitwise_shiftRightBy = F2(function(offset, a)
-{
-	return a >> offset;
-});
-
-var _Bitwise_shiftRightZfBy = F2(function(offset, a)
-{
-	return a >>> offset;
-});
-
-
-
 
 // STRINGS
 
@@ -4535,6 +4498,43 @@ var _Parser_findSubString = F5(function(smallString, offset, row, col, bigString
 	}
 
 	return _Utils_Tuple3(newOffset, row, col);
+});
+
+
+
+var _Bitwise_and = F2(function(a, b)
+{
+	return a & b;
+});
+
+var _Bitwise_or = F2(function(a, b)
+{
+	return a | b;
+});
+
+var _Bitwise_xor = F2(function(a, b)
+{
+	return a ^ b;
+});
+
+function _Bitwise_complement(a)
+{
+	return ~a;
+};
+
+var _Bitwise_shiftLeftBy = F2(function(offset, a)
+{
+	return a << offset;
+});
+
+var _Bitwise_shiftRightBy = F2(function(offset, a)
+{
+	return a >> offset;
+});
+
+var _Bitwise_shiftRightZfBy = F2(function(offset, a)
+{
+	return a >>> offset;
 });
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -5329,360 +5329,6 @@ var $author$project$Cellme$ArrayCellme$CellArray = function (a) {
 	return {$: 'CellArray', a: a};
 };
 var $author$project$Cellme$Cellme$RsUnevaled = {$: 'RsUnevaled'};
-var $author$project$Cellme$Cellme$CellContainer = function (a) {
-	return {$: 'CellContainer', a: a};
-};
-var $elm$core$Maybe$andThen = F2(
-	function (callback, maybeValue) {
-		if (maybeValue.$ === 'Just') {
-			var value = maybeValue.a;
-			return callback(value);
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $elm$core$Bitwise$and = _Bitwise_and;
-var $elm$core$Bitwise$shiftRightZfBy = _Bitwise_shiftRightZfBy;
-var $elm$core$Array$bitMask = 4294967295 >>> (32 - $elm$core$Array$shiftStep);
-var $elm$core$Basics$ge = _Utils_ge;
-var $elm$core$Elm$JsArray$unsafeGet = _JsArray_unsafeGet;
-var $elm$core$Array$getHelp = F3(
-	function (shift, index, tree) {
-		getHelp:
-		while (true) {
-			var pos = $elm$core$Array$bitMask & (index >>> shift);
-			var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, pos, tree);
-			if (_v0.$ === 'SubTree') {
-				var subTree = _v0.a;
-				var $temp$shift = shift - $elm$core$Array$shiftStep,
-					$temp$index = index,
-					$temp$tree = subTree;
-				shift = $temp$shift;
-				index = $temp$index;
-				tree = $temp$tree;
-				continue getHelp;
-			} else {
-				var values = _v0.a;
-				return A2($elm$core$Elm$JsArray$unsafeGet, $elm$core$Array$bitMask & index, values);
-			}
-		}
-	});
-var $elm$core$Bitwise$shiftLeftBy = _Bitwise_shiftLeftBy;
-var $elm$core$Array$tailIndex = function (len) {
-	return (len >>> 5) << 5;
-};
-var $elm$core$Array$get = F2(
-	function (index, _v0) {
-		var len = _v0.a;
-		var startShift = _v0.b;
-		var tree = _v0.c;
-		var tail = _v0.d;
-		return ((index < 0) || (_Utils_cmp(index, len) > -1)) ? $elm$core$Maybe$Nothing : ((_Utils_cmp(
-			index,
-			$elm$core$Array$tailIndex(len)) > -1) ? $elm$core$Maybe$Just(
-			A2($elm$core$Elm$JsArray$unsafeGet, $elm$core$Array$bitMask & index, tail)) : $elm$core$Maybe$Just(
-			A3($elm$core$Array$getHelp, startShift, index, tree)));
-	});
-var $elm$core$Maybe$map = F2(
-	function (f, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return $elm$core$Maybe$Just(
-				f(value));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $author$project$Cellme$ArrayCellme$arrayHas = F2(
-	function (condf, array) {
-		var arrayHasHelper = function (idx) {
-			arrayHasHelper:
-			while (true) {
-				var _v0 = A2(
-					$elm$core$Maybe$map,
-					condf,
-					A2($elm$core$Array$get, idx, array));
-				if (_v0.$ === 'Nothing') {
-					return false;
-				} else {
-					var b = _v0.a;
-					if (b) {
-						return true;
-					} else {
-						var $temp$idx = idx + 1;
-						idx = $temp$idx;
-						continue arrayHasHelper;
-					}
-				}
-			}
-		};
-		return arrayHasHelper(0);
-	});
-var $author$project$Cellme$ArrayCellme$arraysHas = F2(
-	function (condf, arrays) {
-		return A2(
-			$author$project$Cellme$ArrayCellme$arrayHas,
-			function (cc) {
-				return A2($author$project$Cellme$ArrayCellme$arrayHas, condf, cc);
-			},
-			arrays);
-	});
-var $elm$core$String$concat = function (strings) {
-	return A2($elm$core$String$join, '', strings);
-};
-var $elm$core$Result$fromMaybe = F2(
-	function (err, maybe) {
-		if (maybe.$ === 'Just') {
-			var v = maybe.a;
-			return $elm$core$Result$Ok(v);
-		} else {
-			return $elm$core$Result$Err(err);
-		}
-	});
-var $elm$core$Elm$JsArray$map = _JsArray_map;
-var $elm$core$Array$map = F2(
-	function (func, _v0) {
-		var len = _v0.a;
-		var startShift = _v0.b;
-		var tree = _v0.c;
-		var tail = _v0.d;
-		var helper = function (node) {
-			if (node.$ === 'SubTree') {
-				var subTree = node.a;
-				return $elm$core$Array$SubTree(
-					A2($elm$core$Elm$JsArray$map, helper, subTree));
-			} else {
-				var values = node.a;
-				return $elm$core$Array$Leaf(
-					A2($elm$core$Elm$JsArray$map, func, values));
-			}
-		};
-		return A4(
-			$elm$core$Array$Array_elm_builtin,
-			len,
-			startShift,
-			A2($elm$core$Elm$JsArray$map, helper, tree),
-			A2($elm$core$Elm$JsArray$map, func, tail));
-	});
-var $elm$core$Result$map = F2(
-	function (func, ra) {
-		if (ra.$ === 'Ok') {
-			var a = ra.a;
-			return $elm$core$Result$Ok(
-				func(a));
-		} else {
-			var e = ra.a;
-			return $elm$core$Result$Err(e);
-		}
-	});
-var $elm$core$Basics$round = _Basics_round;
-var $elm$core$Elm$JsArray$unsafeSet = _JsArray_unsafeSet;
-var $elm$core$Array$setHelp = F4(
-	function (shift, index, value, tree) {
-		var pos = $elm$core$Array$bitMask & (index >>> shift);
-		var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, pos, tree);
-		if (_v0.$ === 'SubTree') {
-			var subTree = _v0.a;
-			var newSub = A4($elm$core$Array$setHelp, shift - $elm$core$Array$shiftStep, index, value, subTree);
-			return A3(
-				$elm$core$Elm$JsArray$unsafeSet,
-				pos,
-				$elm$core$Array$SubTree(newSub),
-				tree);
-		} else {
-			var values = _v0.a;
-			var newLeaf = A3($elm$core$Elm$JsArray$unsafeSet, $elm$core$Array$bitMask & index, value, values);
-			return A3(
-				$elm$core$Elm$JsArray$unsafeSet,
-				pos,
-				$elm$core$Array$Leaf(newLeaf),
-				tree);
-		}
-	});
-var $elm$core$Array$set = F3(
-	function (index, value, array) {
-		var len = array.a;
-		var startShift = array.b;
-		var tree = array.c;
-		var tail = array.d;
-		return ((index < 0) || (_Utils_cmp(index, len) > -1)) ? array : ((_Utils_cmp(
-			index,
-			$elm$core$Array$tailIndex(len)) > -1) ? A4(
-			$elm$core$Array$Array_elm_builtin,
-			len,
-			startShift,
-			tree,
-			A3($elm$core$Elm$JsArray$unsafeSet, $elm$core$Array$bitMask & index, value, tail)) : A4(
-			$elm$core$Array$Array_elm_builtin,
-			len,
-			startShift,
-			A4($elm$core$Array$setHelp, startShift, index, value, tree),
-			tail));
-	});
-var $elm$core$String$fromFloat = _String_fromNumber;
-var $elm$core$List$intersperse = F2(
-	function (sep, xs) {
-		if (!xs.b) {
-			return _List_Nil;
-		} else {
-			var hd = xs.a;
-			var tl = xs.b;
-			var step = F2(
-				function (x, rest) {
-					return A2(
-						$elm$core$List$cons,
-						sep,
-						A2($elm$core$List$cons, x, rest));
-				});
-			var spersed = A3($elm$core$List$foldr, step, _List_Nil, tl);
-			return A2($elm$core$List$cons, hd, spersed);
-		}
-	});
-var $bburdette$schelme$Show$showTerm = function (term) {
-	switch (term.$) {
-		case 'TString':
-			var str = term.a;
-			return 'string: ' + str;
-		case 'TNumber':
-			var n = term.a;
-			return 'number: ' + $elm$core$String$fromFloat(n);
-		case 'TList':
-			var terms = term.a;
-			return 'list: ' + ('[' + ($elm$core$String$concat(
-				A2(
-					$elm$core$List$intersperse,
-					', ',
-					A2($elm$core$List$map, $bburdette$schelme$Show$showTerm, terms))) + ']'));
-		case 'TSymbol':
-			var str = term.a;
-			return 'symbol: ' + str;
-		case 'TBool':
-			var val = term.a;
-			return 'boolean: ' + function () {
-				if (val) {
-					return 'true';
-				} else {
-					return 'false';
-				}
-			}();
-		case 'TBreak':
-			var val = term.a;
-			return 'break' + $bburdette$schelme$Show$showTerm(val);
-		case 'TFunction':
-			var fn = term.a;
-			return 'function: ' + $elm$core$String$concat(
-				A2($elm$core$List$intersperse, ', ', fn.args));
-		case 'TBuiltIn':
-			var bi = term.a;
-			return 'builtin';
-		default:
-			var se = term.a;
-			return 'sideeffector';
-	}
-};
-var $author$project$Cellme$ArrayCellme$cellArrayr = {
-	cells: $author$project$Cellme$ArrayCellme$CellArray($elm$core$Array$empty),
-	getCell: F2(
-		function (_v0, _v1) {
-			var xi = _v0.a;
-			var yi = _v0.b;
-			var cells = _v1.a;
-			var _v2 = cells.cells;
-			var mca = _v2.a;
-			return A2(
-				$elm$core$Maybe$andThen,
-				$elm$core$Array$get(xi),
-				A2($elm$core$Array$get, yi, mca));
-		}),
-	has: F2(
-		function (fun, _v3) {
-			var cells = _v3.a;
-			var _v4 = cells.cells;
-			var mca = _v4.a;
-			return A2($author$project$Cellme$ArrayCellme$arraysHas, fun, mca);
-		}),
-	makeId: function (args) {
-		if ((((args.b && (args.a.$ === 'TNumber')) && args.b.b) && (args.b.a.$ === 'TNumber')) && (!args.b.b.b)) {
-			var x = args.a.a;
-			var _v6 = args.b;
-			var y = _v6.a.a;
-			var yi = $elm$core$Basics$round(y);
-			var xi = $elm$core$Basics$round(x);
-			return $elm$core$Result$Ok(
-				_Utils_Tuple2(xi, yi));
-		} else {
-			return $elm$core$Result$Err(
-				$elm$core$String$concat(
-					A2(
-						$elm$core$List$cons,
-						'cv args should be 2 numbers!  ',
-						A2($elm$core$List$map, $bburdette$schelme$Show$showTerm, args))));
-		}
-	},
-	map: F2(
-		function (fun, _v7) {
-			var cellz = _v7.a;
-			var _v8 = cellz.cells;
-			var cells = _v8.a;
-			return $author$project$Cellme$Cellme$CellContainer(
-				_Utils_update(
-					cellz,
-					{
-						cells: $author$project$Cellme$ArrayCellme$CellArray(
-							A2(
-								$elm$core$Array$map,
-								function (cellcolumn) {
-									return A2($elm$core$Array$map, fun, cellcolumn);
-								},
-								cells))
-					}));
-		}),
-	setCell: F3(
-		function (_v9, cell, _v10) {
-			var xi = _v9.a;
-			var yi = _v9.b;
-			var cells = _v10.a;
-			var _v11 = cells.cells;
-			var mca = _v11.a;
-			return A2(
-				$elm$core$Result$map,
-				function (newcells) {
-					return $author$project$Cellme$Cellme$CellContainer(
-						_Utils_update(
-							cells,
-							{
-								cells: $author$project$Cellme$ArrayCellme$CellArray(newcells)
-							}));
-				},
-				A2(
-					$elm$core$Result$fromMaybe,
-					'invalid key: (' + ($elm$core$String$fromInt(xi) + (', ' + ($elm$core$String$fromInt(xi) + ')'))),
-					A2(
-						$elm$core$Maybe$map,
-						function (rowarray) {
-							return A3(
-								$elm$core$Array$set,
-								yi,
-								A3($elm$core$Array$set, xi, cell, rowarray),
-								mca);
-						},
-						A2($elm$core$Array$get, yi, mca))));
-		}),
-	showId: function (_v12) {
-		var xi = _v12.a;
-		var yi = _v12.b;
-		return $elm$core$String$concat(
-			_List_fromArray(
-				[
-					'(',
-					$elm$core$String$fromInt(xi),
-					', ',
-					$elm$core$String$fromInt(yi),
-					')'
-				]));
-	}
-};
-var $author$project$Cellme$ArrayCellme$cellArray = $author$project$Cellme$Cellme$CellContainer($author$project$Cellme$ArrayCellme$cellArrayr);
 var $elm$core$Array$fromListHelp = F3(
 	function (list, nodeList, nodeListSize) {
 		fromListHelp:
@@ -5718,6 +5364,31 @@ var $elm$core$Array$fromList = function (list) {
 		return A3($elm$core$Array$fromListHelp, list, _List_Nil, 0);
 	}
 };
+var $elm$core$Elm$JsArray$map = _JsArray_map;
+var $elm$core$Array$map = F2(
+	function (func, _v0) {
+		var len = _v0.a;
+		var startShift = _v0.b;
+		var tree = _v0.c;
+		var tail = _v0.d;
+		var helper = function (node) {
+			if (node.$ === 'SubTree') {
+				var subTree = node.a;
+				return $elm$core$Array$SubTree(
+					A2($elm$core$Elm$JsArray$map, helper, subTree));
+			} else {
+				var values = node.a;
+				return $elm$core$Array$Leaf(
+					A2($elm$core$Elm$JsArray$map, func, values));
+			}
+		};
+		return A4(
+			$elm$core$Array$Array_elm_builtin,
+			len,
+			startShift,
+			A2($elm$core$Elm$JsArray$map, helper, tree),
+			A2($elm$core$Elm$JsArray$map, func, tail));
+	});
 var $author$project$ArrayMain$initelts = function () {
 	var ca = A2(
 		$elm$core$Array$map,
@@ -5742,8 +5413,6 @@ var $author$project$ArrayMain$initelts = function () {
 					_List_fromArray(
 						['9', '(+ (cv 1 0) (cv 1 1))', '0']))
 				])));
-	var _v0 = $author$project$Cellme$ArrayCellme$cellArray;
-	var myc = _v0.a;
 	return $author$project$Cellme$ArrayCellme$CellArray(ca);
 }();
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
@@ -5759,6 +5428,9 @@ var $author$project$ArrayMain$defCell = function (s) {
 		prog: $elm$core$Result$Err(''),
 		runstate: $author$project$Cellme$Cellme$RsErr('')
 	};
+};
+var $author$project$Cellme$Cellme$CellContainer = function (a) {
+	return {$: 'CellContainer', a: a};
 };
 var $author$project$Cellme$Cellme$FeCompileError = {$: 'FeCompileError'};
 var $author$project$Cellme$Cellme$clearCells = function (cells) {
@@ -5781,6 +5453,9 @@ var $elm$core$Result$andThen = F2(
 			return $elm$core$Result$Err(msg);
 		}
 	});
+var $elm$core$String$concat = function (strings) {
+	return A2($elm$core$String$join, '', strings);
+};
 var $bburdette$schelme$Util$problemToString = function (p) {
 	switch (p.$) {
 		case 'Expecting':
@@ -5820,6 +5495,24 @@ var $bburdette$schelme$Util$problemToString = function (p) {
 var $bburdette$schelme$Util$deadEndToString = function (deadend) {
 	return $bburdette$schelme$Util$problemToString(deadend.problem) + (' at row ' + ($elm$core$String$fromInt(deadend.row) + (', col ' + $elm$core$String$fromInt(deadend.col))));
 };
+var $elm$core$List$intersperse = F2(
+	function (sep, xs) {
+		if (!xs.b) {
+			return _List_Nil;
+		} else {
+			var hd = xs.a;
+			var tl = xs.b;
+			var step = F2(
+				function (x, rest) {
+					return A2(
+						$elm$core$List$cons,
+						sep,
+						A2($elm$core$List$cons, x, rest));
+				});
+			var spersed = A3($elm$core$List$foldr, step, _List_Nil, tl);
+			return A2($elm$core$List$cons, hd, spersed);
+		}
+	});
 var $bburdette$schelme$Util$deadEndsToString = function (deadEnds) {
 	return $elm$core$String$concat(
 		A2(
@@ -6503,6 +6196,17 @@ try {
 var $bburdette$schelme$EvalStep$TList = function (a) {
 	return {$: 'TList', a: a};
 };
+var $elm$core$Result$map = F2(
+	function (func, ra) {
+		if (ra.$ === 'Ok') {
+			var a = ra.a;
+			return $elm$core$Result$Ok(
+				func(a));
+		} else {
+			var e = ra.a;
+			return $elm$core$Result$Err(e);
+		}
+	});
 var $bburdette$schelme$EvalStep$TNumber = function (a) {
 	return {$: 'TNumber', a: a};
 };
@@ -6835,6 +6539,16 @@ var $author$project$Cellme$Cellme$PrOk = function (a) {
 var $author$project$Cellme$Cellme$PrPause = function (a) {
 	return {$: 'PrPause', a: a};
 };
+var $elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return $elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
 var $elm$core$Maybe$withDefault = F2(
 	function (_default, maybe) {
 		if (maybe.$ === 'Just') {
@@ -7204,6 +6918,49 @@ var $bburdette$schelme$Util$mbPList = F2(
 		}
 		return $elm$core$Maybe$Nothing;
 	});
+var $elm$core$String$fromFloat = _String_fromNumber;
+var $bburdette$schelme$Show$showTerm = function (term) {
+	switch (term.$) {
+		case 'TString':
+			var str = term.a;
+			return 'string: ' + str;
+		case 'TNumber':
+			var n = term.a;
+			return 'number: ' + $elm$core$String$fromFloat(n);
+		case 'TList':
+			var terms = term.a;
+			return 'list: ' + ('[' + ($elm$core$String$concat(
+				A2(
+					$elm$core$List$intersperse,
+					', ',
+					A2($elm$core$List$map, $bburdette$schelme$Show$showTerm, terms))) + ']'));
+		case 'TSymbol':
+			var str = term.a;
+			return 'symbol: ' + str;
+		case 'TBool':
+			var val = term.a;
+			return 'boolean: ' + function () {
+				if (val) {
+					return 'true';
+				} else {
+					return 'false';
+				}
+			}();
+		case 'TBreak':
+			var val = term.a;
+			return 'break' + $bburdette$schelme$Show$showTerm(val);
+		case 'TFunction':
+			var fn = term.a;
+			return 'function: ' + $elm$core$String$concat(
+				A2($elm$core$List$intersperse, ', ', fn.args));
+		case 'TBuiltIn':
+			var bi = term.a;
+			return 'builtin';
+		default:
+			var se = term.a;
+			return 'sideeffector';
+	}
+};
 var $bburdette$schelme$Eval$evalBody = function (ebs) {
 	switch (ebs.$) {
 		case 'EbError':
@@ -7811,6 +7568,7 @@ var $bburdette$schelme$Prelude$ffbOp = F5(
 				'\'' + (opname + ('\' requires two numeric arguments.  got: ' + $bburdette$schelme$Show$showTerms(terms))));
 		}
 	});
+var $elm$core$Basics$ge = _Utils_ge;
 var $bburdette$schelme$Prelude$minus = F3(
 	function (ns, state, terms) {
 		if ((((terms.b && (terms.a.$ === 'TNumber')) && terms.b.b) && (terms.b.a.$ === 'TNumber')) && (!terms.b.b.b)) {
@@ -9285,6 +9043,15 @@ var $author$project$Cellme$Cellme$errorCheck = function (cellc) {
 		},
 		cellc);
 };
+var $elm$core$Maybe$andThen = F2(
+	function (callback, maybeValue) {
+		if (maybeValue.$ === 'Just') {
+			var value = maybeValue.a;
+			return callback(value);
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
 var $elm$core$List$any = F2(
 	function (isOkay, list) {
 		any:
@@ -9437,16 +9204,244 @@ var $author$project$Cellme$Cellme$evalCellsOnce = function (_v0) {
 		$author$project$Cellme$Cellme$evalCell(unevaledCells),
 		unevaledCells);
 };
+var $elm$core$Bitwise$and = _Bitwise_and;
+var $elm$core$Bitwise$shiftRightZfBy = _Bitwise_shiftRightZfBy;
+var $elm$core$Array$bitMask = 4294967295 >>> (32 - $elm$core$Array$shiftStep);
+var $elm$core$Elm$JsArray$unsafeGet = _JsArray_unsafeGet;
+var $elm$core$Array$getHelp = F3(
+	function (shift, index, tree) {
+		getHelp:
+		while (true) {
+			var pos = $elm$core$Array$bitMask & (index >>> shift);
+			var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, pos, tree);
+			if (_v0.$ === 'SubTree') {
+				var subTree = _v0.a;
+				var $temp$shift = shift - $elm$core$Array$shiftStep,
+					$temp$index = index,
+					$temp$tree = subTree;
+				shift = $temp$shift;
+				index = $temp$index;
+				tree = $temp$tree;
+				continue getHelp;
+			} else {
+				var values = _v0.a;
+				return A2($elm$core$Elm$JsArray$unsafeGet, $elm$core$Array$bitMask & index, values);
+			}
+		}
+	});
+var $elm$core$Bitwise$shiftLeftBy = _Bitwise_shiftLeftBy;
+var $elm$core$Array$tailIndex = function (len) {
+	return (len >>> 5) << 5;
+};
+var $elm$core$Array$get = F2(
+	function (index, _v0) {
+		var len = _v0.a;
+		var startShift = _v0.b;
+		var tree = _v0.c;
+		var tail = _v0.d;
+		return ((index < 0) || (_Utils_cmp(index, len) > -1)) ? $elm$core$Maybe$Nothing : ((_Utils_cmp(
+			index,
+			$elm$core$Array$tailIndex(len)) > -1) ? $elm$core$Maybe$Just(
+			A2($elm$core$Elm$JsArray$unsafeGet, $elm$core$Array$bitMask & index, tail)) : $elm$core$Maybe$Just(
+			A3($elm$core$Array$getHelp, startShift, index, tree)));
+	});
 var $author$project$Cellme$ArrayCellme$getCa = function (_v0) {
 	var cc = _v0.a;
 	return cc.cells;
 };
+var $author$project$Cellme$ArrayCellme$arrayHas = F2(
+	function (condf, array) {
+		var arrayHasHelper = function (idx) {
+			arrayHasHelper:
+			while (true) {
+				var _v0 = A2(
+					$elm$core$Maybe$map,
+					condf,
+					A2($elm$core$Array$get, idx, array));
+				if (_v0.$ === 'Nothing') {
+					return false;
+				} else {
+					var b = _v0.a;
+					if (b) {
+						return true;
+					} else {
+						var $temp$idx = idx + 1;
+						idx = $temp$idx;
+						continue arrayHasHelper;
+					}
+				}
+			}
+		};
+		return arrayHasHelper(0);
+	});
+var $author$project$Cellme$ArrayCellme$arraysHas = F2(
+	function (condf, arrays) {
+		return A2(
+			$author$project$Cellme$ArrayCellme$arrayHas,
+			function (cc) {
+				return A2($author$project$Cellme$ArrayCellme$arrayHas, condf, cc);
+			},
+			arrays);
+	});
+var $elm$core$Result$fromMaybe = F2(
+	function (err, maybe) {
+		if (maybe.$ === 'Just') {
+			var v = maybe.a;
+			return $elm$core$Result$Ok(v);
+		} else {
+			return $elm$core$Result$Err(err);
+		}
+	});
+var $elm$core$Basics$round = _Basics_round;
+var $elm$core$Elm$JsArray$unsafeSet = _JsArray_unsafeSet;
+var $elm$core$Array$setHelp = F4(
+	function (shift, index, value, tree) {
+		var pos = $elm$core$Array$bitMask & (index >>> shift);
+		var _v0 = A2($elm$core$Elm$JsArray$unsafeGet, pos, tree);
+		if (_v0.$ === 'SubTree') {
+			var subTree = _v0.a;
+			var newSub = A4($elm$core$Array$setHelp, shift - $elm$core$Array$shiftStep, index, value, subTree);
+			return A3(
+				$elm$core$Elm$JsArray$unsafeSet,
+				pos,
+				$elm$core$Array$SubTree(newSub),
+				tree);
+		} else {
+			var values = _v0.a;
+			var newLeaf = A3($elm$core$Elm$JsArray$unsafeSet, $elm$core$Array$bitMask & index, value, values);
+			return A3(
+				$elm$core$Elm$JsArray$unsafeSet,
+				pos,
+				$elm$core$Array$Leaf(newLeaf),
+				tree);
+		}
+	});
+var $elm$core$Array$set = F3(
+	function (index, value, array) {
+		var len = array.a;
+		var startShift = array.b;
+		var tree = array.c;
+		var tail = array.d;
+		return ((index < 0) || (_Utils_cmp(index, len) > -1)) ? array : ((_Utils_cmp(
+			index,
+			$elm$core$Array$tailIndex(len)) > -1) ? A4(
+			$elm$core$Array$Array_elm_builtin,
+			len,
+			startShift,
+			tree,
+			A3($elm$core$Elm$JsArray$unsafeSet, $elm$core$Array$bitMask & index, value, tail)) : A4(
+			$elm$core$Array$Array_elm_builtin,
+			len,
+			startShift,
+			A4($elm$core$Array$setHelp, startShift, index, value, tree),
+			tail));
+	});
+var $author$project$Cellme$ArrayCellme$arrayCcr = {
+	cells: $author$project$Cellme$ArrayCellme$CellArray($elm$core$Array$empty),
+	getCell: F2(
+		function (_v0, _v1) {
+			var xi = _v0.a;
+			var yi = _v0.b;
+			var cells = _v1.a;
+			var _v2 = cells.cells;
+			var mca = _v2.a;
+			return A2(
+				$elm$core$Maybe$andThen,
+				$elm$core$Array$get(xi),
+				A2($elm$core$Array$get, yi, mca));
+		}),
+	has: F2(
+		function (fun, _v3) {
+			var cells = _v3.a;
+			var _v4 = cells.cells;
+			var mca = _v4.a;
+			return A2($author$project$Cellme$ArrayCellme$arraysHas, fun, mca);
+		}),
+	makeId: function (args) {
+		if ((((args.b && (args.a.$ === 'TNumber')) && args.b.b) && (args.b.a.$ === 'TNumber')) && (!args.b.b.b)) {
+			var x = args.a.a;
+			var _v6 = args.b;
+			var y = _v6.a.a;
+			var yi = $elm$core$Basics$round(y);
+			var xi = $elm$core$Basics$round(x);
+			return $elm$core$Result$Ok(
+				_Utils_Tuple2(xi, yi));
+		} else {
+			return $elm$core$Result$Err(
+				$elm$core$String$concat(
+					A2(
+						$elm$core$List$cons,
+						'cv args should be 2 numbers!  ',
+						A2($elm$core$List$map, $bburdette$schelme$Show$showTerm, args))));
+		}
+	},
+	map: F2(
+		function (fun, _v7) {
+			var cellz = _v7.a;
+			var _v8 = cellz.cells;
+			var cells = _v8.a;
+			return $author$project$Cellme$Cellme$CellContainer(
+				_Utils_update(
+					cellz,
+					{
+						cells: $author$project$Cellme$ArrayCellme$CellArray(
+							A2(
+								$elm$core$Array$map,
+								function (cellcolumn) {
+									return A2($elm$core$Array$map, fun, cellcolumn);
+								},
+								cells))
+					}));
+		}),
+	setCell: F3(
+		function (_v9, cell, _v10) {
+			var xi = _v9.a;
+			var yi = _v9.b;
+			var cells = _v10.a;
+			var _v11 = cells.cells;
+			var mca = _v11.a;
+			return A2(
+				$elm$core$Result$map,
+				function (newcells) {
+					return $author$project$Cellme$Cellme$CellContainer(
+						_Utils_update(
+							cells,
+							{
+								cells: $author$project$Cellme$ArrayCellme$CellArray(newcells)
+							}));
+				},
+				A2(
+					$elm$core$Result$fromMaybe,
+					'invalid key: (' + ($elm$core$String$fromInt(xi) + (', ' + ($elm$core$String$fromInt(xi) + ')'))),
+					A2(
+						$elm$core$Maybe$map,
+						function (rowarray) {
+							return A3(
+								$elm$core$Array$set,
+								yi,
+								A3($elm$core$Array$set, xi, cell, rowarray),
+								mca);
+						},
+						A2($elm$core$Array$get, yi, mca))));
+		}),
+	showId: function (_v12) {
+		var xi = _v12.a;
+		var yi = _v12.b;
+		return $elm$core$String$concat(
+			_List_fromArray(
+				[
+					'(',
+					$elm$core$String$fromInt(xi),
+					', ',
+					$elm$core$String$fromInt(yi),
+					')'
+				]));
+	}
+};
 var $author$project$Cellme$ArrayCellme$mkCc = function (mca) {
-	var _v0 = $author$project$Cellme$ArrayCellme$cellArray;
-	var cc = _v0.a;
 	return $author$project$Cellme$Cellme$CellContainer(
 		_Utils_update(
-			cc,
+			$author$project$Cellme$ArrayCellme$arrayCcr,
 			{cells: mca}));
 };
 var $author$project$ArrayMain$update = F2(
@@ -16363,8 +16358,6 @@ var $mdgriffith$elm_ui$Element$Input$text = $mdgriffith$elm_ui$Element$Input$tex
 	});
 var $author$project$ArrayMain$viewCell = F3(
 	function (xi, yi, cell) {
-		var _v0 = $author$project$Cellme$ArrayCellme$cellArray;
-		var mycc = _v0.a;
 		return A2(
 			$mdgriffith$elm_ui$Element$column,
 			_List_fromArray(
@@ -16395,14 +16388,14 @@ var $author$project$ArrayMain$viewCell = F3(
 							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
 						]),
 					function () {
-						var _v1 = cell.runstate;
-						switch (_v1.$) {
+						var _v0 = cell.runstate;
+						switch (_v0.$) {
 							case 'RsOk':
-								var term = _v1.a;
+								var term = _v0.a;
 								return $mdgriffith$elm_ui$Element$text(
 									$bburdette$schelme$Show$showTerm(term));
 							case 'RsErr':
-								var s = _v1.a;
+								var s = _v0.a;
 								return A2(
 									$mdgriffith$elm_ui$Element$el,
 									_List_fromArray(
@@ -16414,9 +16407,9 @@ var $author$project$ArrayMain$viewCell = F3(
 							case 'RsUnevaled':
 								return $mdgriffith$elm_ui$Element$text('unevaled');
 							default:
-								var id = _v1.b;
+								var id = _v0.b;
 								return $mdgriffith$elm_ui$Element$text(
-									'blocked on cell: ' + mycc.showId(id));
+									'blocked on cell: ' + $author$project$Cellme$ArrayCellme$arrayCcr.showId(id));
 						}
 					}())
 				]));
